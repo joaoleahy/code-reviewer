@@ -4,10 +4,9 @@ import Layout from '../components/Layout/Layout';
 import Button from '../components/UI/Button';
 import StatusBadge from '../components/UI/StatusBadge';
 import { useReviews, useExport } from '../hooks/useApi';
-import { ReviewFilters, ProgrammingLanguage, ReviewStatus } from '../types/api';
+import { ReviewStatus } from '../types/api';
 import { 
   formatDate, 
-  formatRelativeTime, 
   getLanguageConfig, 
   getQualityLevel,
   truncateText 
@@ -25,7 +24,6 @@ const HistoryPage: React.FC = () => {
     filters,
     updateFilters,
     changePage,
-    isLoading,
     error,
     refresh
   } = useReviews();

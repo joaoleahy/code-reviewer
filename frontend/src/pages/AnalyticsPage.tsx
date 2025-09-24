@@ -6,7 +6,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   PieChart,
   Pie,
   Cell,
@@ -17,13 +16,12 @@ import {
 import { Download, TrendingUp, Users, Code, Clock } from 'lucide-react';
 import Layout from '../components/Layout/Layout';
 import Button from '../components/UI/Button';
-import LoadingSpinner from '../components/UI/LoadingSpinner';
 import { useStats, useExport } from '../hooks/useApi';
 import { CHART_COLORS } from '../utils/constants';
-import { formatNumber, formatPercentage, calculateSuccessRate } from '../utils/helpers';
+import { formatNumber, calculateSuccessRate } from '../utils/helpers';
 
 const AnalyticsPage: React.FC = () => {
-  const { stats, isLoading, error, refresh } = useStats();
+  const { stats, error, refresh } = useStats();
   const { exportStats, isExporting } = useExport();
   const [selectedMetric, setSelectedMetric] = useState<'reviews' | 'score'>('reviews');
 
