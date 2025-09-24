@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#3b82f6" />
+    <meta
+      name="description"
+      content="AI-powered code review system. Get detailed feedback on code quality, security, and performance."
+    />
+    <meta name="keywords" content="code review, AI, artificial intelligence, code analysis, programming, development" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ai-code-reviewer.com/" />
+    <meta property="og:title" content="AI Code Reviewer - AI-Powered Code Review" />
+    <meta property="og:description" content="AI-powered code review system. Get detailed feedback on code quality, security, and performance." />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://ai-code-reviewer.com/" />
+    <meta property="twitter:title" content="AI Code Reviewer - AI-Powered Code Review" />
+    <meta property="twitter:description" content="AI-powered code review system. Get detailed feedback on code quality, security, and performance." />
+    <meta property="twitter:image" content="%PUBLIC_URL%/og-image.png" />
+    
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Preload critical resources -->
+    <link rel="dns-prefetch" href="//localhost:8000">
+    
+    <title>AI Code Reviewer - AI-Powered Code Review</title>
+  </head>
+  <body>
+    <noscript>
+      <div style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        text-align: center;
+        padding: 2rem;
+        background-color: #f9fafb;
+      ">
+        <div style="
+          background-color: white;
+          border-radius: 8px;
+          padding: 3rem;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+          max-width: 500px;
+        ">
+          <div style="font-size: 48px; margin-bottom: 1rem;">🤖</div>
+          <h1 style="color: #111827; margin-bottom: 1rem; font-size: 24px;">
+            JavaScript Required
+          </h1>
+          <p style="color: #6b7280; margin-bottom: 2rem; line-height: 1.5;">
+            AI Code Reviewer requires JavaScript to function. 
+            Please enable JavaScript in your browser and reload the page.
+          </p>
+          <p style="color: #9ca3af; font-size: 14px;">
+            This application uses React and requires JavaScript for a complete experience.
+          </p>
+        </div>
+      </div>
+    </noscript>
+    
+    <div id="root">
+      <!-- Loading spinner enquanto o React carrega -->
+      <div id="initial-loading" style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #f9fafb;
+      ">
+        <div style="text-align: center;">
+          <div style="
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e5e7eb;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+          "></div>
+          <p style="
+            color: #6b7280;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-size: 14px;
+          ">
+            Loading AI Code Reviewer...
+          </p>
+        </div>
+      </div>
+      
+      <style>
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      </style>
+      
+      <script>
+        // Remove loading spinner when React is ready
+        window.addEventListener('DOMContentLoaded', function() {
+          setTimeout(function() {
+            const loading = document.getElementById('initial-loading');
+            if (loading && document.querySelector('[data-reactroot], #root > div')) {
+              loading.style.display = 'none';
+            }
+          }, 100);
+        });
+      </script>
+    </div>
+    
+    <!-- 
+      This HTML will be replaced by React content.
+      To create an optimized production build, run `npm run build`.
+    -->
+  </body>
+</html>
