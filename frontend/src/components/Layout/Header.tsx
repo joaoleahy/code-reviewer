@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Code2, BarChart3, Settings, Github } from 'lucide-react';
+import { Code2, BarChart3, Settings, Github, LogIn } from 'lucide-react';
 import { APP_CONFIG } from '../../utils/constants';
+import { useAuth } from '../../contexts/AuthContext';
+import UserMenu from '../Auth/UserMenu';
+import LoginModal from '../Auth/LoginModal';
+import Button from '../UI/Button';
 
 const Header: React.FC = () => {
   const location = useLocation();
+  const { isAuthenticated } = useAuth();
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const navigation = [
     { name: 'Code Review', href: '/', icon: Code2, current: location.pathname === '/' },
@@ -52,9 +58,7 @@ const Header: React.FC = () => {
             })}
           </nav>
 
-          {/* Actions */}
           <div className="flex items-center space-x-4">
-            {/* GitHub Link */}
             <a
               href="https://github.com"
               target="_blank"
@@ -65,11 +69,24 @@ const Header: React.FC = () => {
               <Github className="h-5 w-5" />
             </a>
 
-            {/* API Status */}
             <div className="flex items-center space-x-2">
               <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></div>
               <span className="text-xs text-gray-500">API Online</span>
             </div>
+
+            {isAuthenticated ? (
+              <UserMenu />
+            ) : (
+              <Button
+                onClick={() => setShowLoginModal(true)}
+                variant="primary"
+                size="sm"
+                className="flex items-center"
+              >
+                <LogIn className="h-4 w-4 mr-2" />
+                Sign In
+              </Button>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -94,7 +111,6 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile navigation */}
       <div className="md:hidden">
         <div className="pt-2 pb-3 space-y-1">
           {navigation.map((item) => {
@@ -120,6 +136,11 @@ const Header: React.FC = () => {
           })}
         </div>
       </div>
+
+      <LoginModal 
+        isOpen={showLoginModal} 
+        onClose={() => setShowLoginModal(false)} 
+      />
     </header>
   );
 };
