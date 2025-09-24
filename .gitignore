@@ -35,11 +35,3 @@ pnpm-debug.log*
 *.hprof
 *.db
 *.sql
-*.cursor
-
-# Temporary and development files
-tmp_*.rs
-*_tmp.*
-commit_strategy.sh
-PROJETO_COMPLETO.md
-*.draft.*

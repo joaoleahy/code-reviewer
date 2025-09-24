@@ -1,5 +1,19 @@
-# Use Python 3.11 slim image
-FROM python:3.11-slim
+# Use Ubuntu as base and install Python
+FROM ubuntu:22.04
+
+# Install Python and dependencies
+RUN apt-get update && apt-get install -y \
+    python3.11 \
+    python3.11-pip \
+    python3.11-dev \
+    python3.11-venv \
+    gcc \
+    curl \
+    build-essential \
+    && ln -s /usr/bin/python3.11 /usr/bin/python \
+    && ln -s /usr/bin/pip3.11 /usr/bin/pip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set work directory
 WORKDIR /app
@@ -8,16 +22,6 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app
-
-# Install system dependencies in single layer
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        gcc \
-        curl \
-        build-essential \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /tmp/* \
-    && rm -rf /var/tmp/*
 
 # Install Python dependencies with better caching
 COPY requirements.txt .
