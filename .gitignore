@@ -1,9 +1,11 @@
 # Project files
 .env
 .venv
+venv/
 __pycache__/
 *.pyc
 node_modules/
+package-lock.json
 dist/
 build/
 .DS_Store
