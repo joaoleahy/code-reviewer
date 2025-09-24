@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 from app.core.config import settings
 from app.core.database import connect_to_mongo, close_mongo_connection
-from app.api import reviews, stats, health
+from app.api import reviews, stats, health, auth
 
 load_dotenv()
 
@@ -35,6 +35,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
 app.include_router(reviews.router, prefix="/api")
 app.include_router(stats.router, prefix="/api")
 app.include_router(health.router, prefix="/api")
