@@ -13,6 +13,9 @@ class Settings(BaseSettings):
     RATE_LIMIT_PER_HOUR: int = int(os.getenv("RATE_LIMIT_PER_HOUR", "10"))
     
     SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-here")
+    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "your-jwt-secret-key-change-in-production")
+    JWT_ALGORITHM: str = "HS256"
+    JWT_EXPIRY_DAYS: int = 7
     
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
     
