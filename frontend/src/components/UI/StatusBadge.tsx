@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, Cog, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { Clock, Cog, CheckCircle, XCircle } from 'lucide-react';
 import { ReviewStatus } from '../../types/api';
 import { getStatusConfig, cn } from '../../utils/helpers';
 

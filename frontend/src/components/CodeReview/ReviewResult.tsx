@@ -7,7 +7,6 @@ import {
   ThumbsUp, 
   Star,
   Copy,
-  Download,
   Share2
 } from 'lucide-react';
 import { Review } from '../../types/api';
