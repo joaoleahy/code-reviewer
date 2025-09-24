@@ -21,6 +21,32 @@ export enum ProgrammingLanguage {
   OTHER = 'other'
 }
 
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  created_at: string;
+  last_login?: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  email: string;
+  name: string;
+  password: string;
+}
+
+export interface AuthToken {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  user: User;
+}
+
 export interface CodeSubmission {
   code: string;
   language: ProgrammingLanguage;

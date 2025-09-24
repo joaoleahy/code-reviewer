@@ -8,10 +8,13 @@ import {
   HealthCheck,
   ReviewFilters,
   ExportFilters,
-  ApiError
+  ApiError,
+  LoginRequest,
+  RegisterRequest,
+  AuthToken,
+  User
 } from '../types/api';
 
-// Configuração base do axios
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL || '/api',
   timeout: 30000,
@@ -20,7 +23,21 @@ const api = axios.create({
   },
 });
 
-// Interceptador para tratamento de erros
+const getAuthToken = (): string | null => {
+  return localStorage.getItem('codereviewer_token');
+};
+
+api.interceptors.request.use(
+  (config) => {
+    const token = getAuthToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
@@ -30,13 +47,16 @@ api.interceptors.response.use(
       details: error.response?.data,
     };
 
-    // Tratamento específico de erros
-    if (error.response?.status === 429) {
-      apiError.message = 'Rate limit excedido. Tente novamente mais tarde.';
+    if (error.response?.status === 401) {
+      localStorage.removeItem('codereviewer_token');
+      localStorage.removeItem('codereviewer_user');
+      window.dispatchEvent(new Event('auth-logout'));
+    } else if (error.response?.status === 429) {
+      apiError.message = 'Rate limit exceeded. Please try again later.';
     } else if (error.response?.status === 500) {
-      apiError.message = 'Erro interno do servidor. Tente novamente.';
+      apiError.message = 'Server error. Please try again.';
     } else if (error.code === 'ECONNABORTED') {
-      apiError.message = 'Timeout na requisição. Verifique sua conexão.';
+      apiError.message = 'Request timeout. Check your connection.';
     }
 
     return Promise.reject(apiError);
@@ -52,6 +72,27 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export class ApiService {
+  // ========== AUTHENTICATION ==========
+  
+  static async login(credentials: LoginRequest): Promise<AuthToken> {
+    const response: AxiosResponse<AuthToken> = await api.post('/auth/login', credentials);
+    return response.data;
+  }
+
+  static async register(userData: RegisterRequest): Promise<AuthToken> {
+    const response: AxiosResponse<AuthToken> = await api.post('/auth/register', userData);
+    return response.data;
+  }
+
+  static async getProfile(): Promise<User> {
+    const response: AxiosResponse<User> = await api.get('/auth/profile');
+    return response.data;
+  }
+
+  static async logout(): Promise<void> {
+    await api.post('/auth/logout');
+  }
+
   // ========== REVIEWS ==========
   
   static async submitReview(submission: CodeSubmission): Promise<ReviewResponse> {
