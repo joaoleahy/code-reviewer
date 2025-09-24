@@ -51,6 +51,8 @@ class Review(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow, description="Creation date")
     completed_at: Optional[datetime] = Field(None, description="Completion date")
     ip_address: Optional[str] = Field(None, description="Client IP address")
+    user_id: Optional[str] = Field(None, description="User ID who submitted the review")
+    user_email: Optional[str] = Field(None, description="User email for quick reference")
     processing_time: Optional[float] = Field(None, description="Processing time in seconds")
     error_message: Optional[str] = Field(None, description="Error message if failed")
 

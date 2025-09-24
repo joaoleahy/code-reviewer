@@ -12,19 +12,26 @@ class StatsService:
     def __init__(self):
         pass
     
-    async def get_statistics(self) -> StatsResponse:
+    async def get_statistics(self, user_id: str = None) -> StatsResponse:
         """
-        Get general system statistics
+        Get user-specific statistics (if user_id provided) or general system statistics
         """
         try:
             db = get_database()
             
-            total_reviews = await db.reviews.count_documents({})
-            total_completed = await db.reviews.count_documents({"status": ReviewStatus.COMPLETED})
-            total_failed = await db.reviews.count_documents({"status": ReviewStatus.FAILED})
+            # Create filter based on whether user_id is provided
+            base_filter = {"user_id": user_id} if user_id else {}
+            
+            total_reviews = await db.reviews.count_documents(base_filter)
+            
+            completed_filter = {**base_filter, "status": ReviewStatus.COMPLETED}
+            total_completed = await db.reviews.count_documents(completed_filter)
+            
+            failed_filter = {**base_filter, "status": ReviewStatus.FAILED}
+            total_failed = await db.reviews.count_documents(failed_filter)
             
             pipeline_avg = [
-                {"$match": {"status": ReviewStatus.COMPLETED, "feedback.quality_score": {"$exists": True}}},
+                {"$match": {**completed_filter, "feedback.quality_score": {"$exists": True}}},
                 {"$group": {
                     "_id": None,
                     "avg_score": {"$avg": "$feedback.quality_score"},
@@ -36,13 +43,13 @@ class StatsService:
             average_quality_score = avg_results[0]["avg_score"] if avg_results else 0.0
             average_processing_time = avg_results[0]["avg_processing_time"] if avg_results else 0.0
             
-            language_stats = await self._get_language_stats()
+            language_stats = await self._get_language_stats(user_id=user_id)
             
-            daily_stats = await self._get_daily_stats()
+            daily_stats = await self._get_daily_stats(user_id=user_id)
             
-            common_issues = await self._get_common_issues()
+            common_issues = await self._get_common_issues(user_id=user_id)
             
-            score_distribution = await self._get_score_distribution()
+            score_distribution = await self._get_score_distribution(user_id=user_id)
             
             return StatsResponse(
                 total_reviews=total_reviews,
@@ -66,15 +73,20 @@ class StatsService:
                 average_processing_time=0.0
             )
     
-    async def _get_language_stats(self) -> List[LanguageStats]:
+    async def _get_language_stats(self, user_id: str = None) -> List[LanguageStats]:
         """
         Get statistics by programming language
         """
         try:
             db = get_database()
             
+            # Create filter based on whether user_id is provided
+            match_filter = {"status": ReviewStatus.COMPLETED}
+            if user_id:
+                match_filter["user_id"] = user_id
+            
             pipeline = [
-                {"$match": {"status": ReviewStatus.COMPLETED}},
+                {"$match": match_filter},
                 {"$group": {
                     "_id": "$language",
                     "count": {"$sum": 1},
@@ -100,7 +112,7 @@ class StatsService:
             print(f"Error getting language stats: {e}")
             return []
     
-    async def _get_daily_stats(self) -> List[DailyStats]:
+    async def _get_daily_stats(self, user_id: str = None) -> List[DailyStats]:
         """
         Get daily statistics for the last 30 days
         """
@@ -109,11 +121,16 @@ class StatsService:
             
             thirty_days_ago = datetime.utcnow() - timedelta(days=30)
             
+            # Create filter based on whether user_id is provided
+            match_filter = {
+                "created_at": {"$gte": thirty_days_ago},
+                "status": ReviewStatus.COMPLETED
+            }
+            if user_id:
+                match_filter["user_id"] = user_id
+            
             pipeline = [
-                {"$match": {
-                    "created_at": {"$gte": thirty_days_ago},
-                    "status": ReviewStatus.COMPLETED
-                }},
+                {"$match": match_filter},
                 {"$group": {
                     "_id": {
                         "$dateToString": {
@@ -143,17 +160,22 @@ class StatsService:
             print(f"Error getting daily stats: {e}")
             return []
     
-    async def _get_common_issues(self) -> List[CommonIssue]:
+    async def _get_common_issues(self, user_id: str = None) -> List[CommonIssue]:
         """
         Get most common issues identified by AI
         """
         try:
             db = get_database()
             
-            cursor = db.reviews.find({
+            # Create filter based on whether user_id is provided
+            find_filter = {
                 "status": ReviewStatus.COMPLETED,
                 "feedback.issues": {"$exists": True}
-            })
+            }
+            if user_id:
+                find_filter["user_id"] = user_id
+            
+            cursor = db.reviews.find(find_filter)
             
             all_issues = []
             async for review in cursor:
@@ -175,15 +197,20 @@ class StatsService:
             print(f"Error getting common issues: {e}")
             return []
     
-    async def _get_score_distribution(self) -> Dict[str, int]:
+    async def _get_score_distribution(self, user_id: str = None) -> Dict[str, int]:
         """
         Get score distribution
         """
         try:
             db = get_database()
             
+            # Create filter based on whether user_id is provided
+            match_filter = {"status": ReviewStatus.COMPLETED}
+            if user_id:
+                match_filter["user_id"] = user_id
+            
             pipeline = [
-                {"$match": {"status": ReviewStatus.COMPLETED}},
+                {"$match": match_filter},
                 {"$group": {
                     "_id": "$feedback.quality_score",
                     "count": {"$sum": 1}

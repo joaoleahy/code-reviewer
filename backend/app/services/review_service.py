@@ -15,7 +15,13 @@ class ReviewService:
     def __init__(self):
         pass
     
-    async def submit_review(self, submission: CodeSubmission, ip_address: str) -> str:
+    async def submit_review(
+        self, 
+        submission: CodeSubmission, 
+        ip_address: str,
+        user_id: Optional[str] = None,
+        user_email: Optional[str] = None
+    ) -> str:
         """
         Submit code for review
         """
@@ -28,6 +34,8 @@ class ReviewService:
             description=submission.description,
             status=ReviewStatus.PENDING,
             ip_address=ip_address,
+            user_id=user_id,
+            user_email=user_email,
             created_at=datetime.utcnow()
         )
         
@@ -119,7 +127,8 @@ class ReviewService:
         status: Optional[ReviewStatus] = None,
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None,
-        search_text: Optional[str] = None
+        search_text: Optional[str] = None,
+        user_id: Optional[str] = None
     ) -> ReviewListResponse:
         """
         List reviews with pagination and filters
@@ -129,6 +138,8 @@ class ReviewService:
             
             # Build filters
             filters = {}
+            if user_id:
+                filters["user_id"] = user_id
             if language:
                 filters["language"] = language
             if status:
@@ -182,7 +193,8 @@ class ReviewService:
         end_date: datetime,
         languages: List[str] = None,
         min_score: int = 1,
-        max_score: int = 10
+        max_score: int = 10,
+        user_id: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """
         Get reviews for CSV export
@@ -195,6 +207,9 @@ class ReviewService:
                 "status": ReviewStatus.COMPLETED,
                 "feedback.quality_score": {"$gte": min_score, "$lte": max_score}
             }
+            
+            if user_id:
+                filters["user_id"] = user_id
             
             if languages:
                 filters["language"] = {"$in": languages}

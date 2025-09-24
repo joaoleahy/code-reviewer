@@ -1,34 +1,36 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import StreamingResponse
 from typing import Dict, Any
 import io
 
 from ..models.stats import StatsResponse
+from ..models.user import UserResponse
 from ..services.stats_service import stats_service
 from ..utils.csv_exporter import csv_exporter
+from ..utils.dependencies import require_auth
 
 router = APIRouter(tags=["statistics"])
 
 
 @router.get("/stats", response_model=StatsResponse)
-async def get_statistics():
+async def get_statistics(current_user: UserResponse = Depends(require_auth)):
     """
-    Get general system statistics
+    Get user-specific statistics
     """
     try:
-        return await stats_service.get_statistics()
+        return await stats_service.get_statistics(user_id=current_user.id)
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 
 
 @router.get("/stats/export/csv")
-async def export_stats_csv():
+async def export_stats_csv(current_user: UserResponse = Depends(require_auth)):
     """
-    Export statistics to CSV
+    Export user statistics to CSV
     """
     try:
-        stats = await stats_service.get_statistics()
+        stats = await stats_service.get_statistics(user_id=current_user.id)
         stats_dict = stats.dict()
         
         csv_content = csv_exporter.export_stats_to_csv(stats_dict)
@@ -36,7 +38,7 @@ async def export_stats_csv():
         return StreamingResponse(
             io.BytesIO(csv_content.encode('utf-8')),
             media_type="text/csv",
-            headers={"Content-Disposition": "attachment; filename=system_statistics.csv"}
+            headers={"Content-Disposition": "attachment; filename=user_statistics.csv"}
         )
         
     except Exception as e:
@@ -44,12 +46,12 @@ async def export_stats_csv():
 
 
 @router.get("/stats/summary")
-async def get_stats_summary():
+async def get_stats_summary(current_user: UserResponse = Depends(require_auth)):
     """
-    Get quick statistics summary (for dashboard)
+    Get quick statistics summary for user (for dashboard)
     """
     try:
-        stats = await stats_service.get_statistics()
+        stats = await stats_service.get_statistics(user_id=current_user.id)
         
         return {
             "total_reviews": stats.total_reviews,
