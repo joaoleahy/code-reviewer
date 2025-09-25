@@ -21,7 +21,7 @@ import { CHART_COLORS } from '../utils/constants';
 import { formatNumber, calculateSuccessRate } from '../utils/helpers';
 
 const AnalyticsPage: React.FC = () => {
-  const { stats, error, refresh } = useStats();
+  const { stats, error, refresh, isLoading } = useStats();
   const { exportStats, isExporting } = useExport();
   const [selectedMetric, setSelectedMetric] = useState<'reviews' | 'score'>('reviews');
 
@@ -30,8 +30,27 @@ const AnalyticsPage: React.FC = () => {
     await exportStats(filename);
   };
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center py-20">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-orange-600 mx-auto mb-6"></div>
+            <h3 className="text-xl font-medium text-gray-900 mb-2">
+              Loading Analytics
+            </h3>
+            <p className="text-gray-600">
+              Gathering your code review statistics...
+            </p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
-  if (error || !stats) {
+  // Error state
+  if (error) {
     return (
       <Layout>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -41,10 +60,32 @@ const AnalyticsPage: React.FC = () => {
               Error loading statistics
             </h3>
             <p className="text-gray-600 mb-4">
-              {error || 'Unable to load analytics data'}
+              {error}
             </p>
             <Button onClick={refresh} variant="outline">
               Try Again
+            </Button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  // No data state
+  if (!stats) {
+    return (
+      <Layout>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center py-12">
+            <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No Data Available
+            </h3>
+            <p className="text-gray-600 mb-4">
+              No analytics data found. Submit some code reviews to see statistics.
+            </p>
+            <Button onClick={refresh} variant="outline">
+              Refresh
             </Button>
           </div>
         </div>
