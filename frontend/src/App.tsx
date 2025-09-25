@@ -17,13 +17,12 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 import './index.css';
 
-// React Query configuration
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 2,
       refetchOnWindowFocus: false,
-      staleTime: 5 * 60 * 1000, // 5 minutos
+      staleTime: 5 * 60 * 1000,
     },
     mutations: {
       retry: 1,
@@ -38,19 +37,17 @@ const AppContent: React.FC = () => {
   const [authView, setAuthView] = useState<AuthView>('landing');
   const [authLoading, setAuthLoading] = useState(false);
 
-  // Show loading spinner while checking auth
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Carregando...</p>
+          <p className="text-gray-600">Loading...</p>
         </div>
       </div>
     );
   }
 
-  // If authenticated, show main app
   if (isAuthenticated) {
     return (
       <Router>
@@ -67,14 +64,12 @@ const AppContent: React.FC = () => {
     );
   }
 
-  // Handle authentication
   const handleLogin = async (email: string, password: string) => {
     try {
       setAuthLoading(true);
       clearError();
       await login(email, password);
     } catch (err) {
-      // Error is handled by AuthContext
     } finally {
       setAuthLoading(false);
     }
@@ -86,13 +81,11 @@ const AppContent: React.FC = () => {
       clearError();
       await register(email, name, password);
     } catch (err) {
-      // Error is handled by AuthContext
     } finally {
       setAuthLoading(false);
     }
   };
 
-  // Show authentication views
   if (authView === 'login') {
     return (
       <LoginForm
@@ -117,7 +110,6 @@ const AppContent: React.FC = () => {
     );
   }
 
-  // Show landing page
   return (
     <LandingPage
       onShowLogin={() => setAuthView('login')}
@@ -142,7 +134,6 @@ function App() {
   );
 }
 
-// 404 Page
 const NotFoundPage: React.FC = () => (
   <Layout>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

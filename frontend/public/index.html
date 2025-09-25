@@ -74,7 +74,6 @@
     </noscript>
     
     <div id="root">
-      <!-- Loading spinner enquanto o React carrega -->
       <div id="initial-loading" style="
         display: flex;
         align-items: center;
@@ -110,7 +109,6 @@
       </style>
       
       <script>
-        // Remove loading spinner when React is ready
         window.addEventListener('DOMContentLoaded', function() {
           setTimeout(function() {
             const loading = document.getElementById('initial-loading');
@@ -121,10 +119,5 @@
         });
       </script>
     </div>
-    
-    <!-- 
-      This HTML will be replaced by React content.
-      To create an optimized production build, run `npm run build`.
-    -->
   </body>
 </html>

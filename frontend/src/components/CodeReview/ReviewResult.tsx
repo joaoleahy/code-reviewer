@@ -126,7 +126,6 @@ Review generated on ${formatDate(review.created_at)}
 
   return (
     <div className={`bg-white rounded-lg shadow-sm border border-gray-200 ${className}`}>
-      {/* Header with general information */}
       <div className="border-b border-gray-200 p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
@@ -165,7 +164,6 @@ Review generated on ${formatDate(review.created_at)}
           </div>
         </div>
 
-        {/* Quality score */}
         <div className="flex items-center space-x-4">
           <div className="text-center">
             <div className={`text-3xl font-bold text-${qualityLevel.color}`}>
@@ -183,7 +181,6 @@ Review generated on ${formatDate(review.created_at)}
         </div>
       </div>
 
-      {/* Original code */}
       <div className="p-6 border-b border-gray-200">
         <h3 className="text-lg font-medium text-gray-900 mb-4">Analyzed Code</h3>
         {review.description && (
@@ -198,9 +195,7 @@ Review generated on ${formatDate(review.created_at)}
         />
       </div>
 
-      {/* Detailed feedback */}
       <div className="p-6 space-y-6">
-        {/* Identified issues */}
         {feedback.issues.length > 0 && (
           <FeedbackSection
             title="Identified Issues"
@@ -212,7 +207,6 @@ Review generated on ${formatDate(review.created_at)}
           />
         )}
 
-        {/* Improvement suggestions */}
         {feedback.suggestions.length > 0 && (
           <FeedbackSection
             title="Improvement Suggestions"
@@ -224,7 +218,6 @@ Review generated on ${formatDate(review.created_at)}
           />
         )}
 
-        {/* Security concerns */}
         {feedback.security_concerns.length > 0 && (
           <FeedbackSection
             title="Security Concerns"
@@ -237,7 +230,6 @@ Review generated on ${formatDate(review.created_at)}
           />
         )}
 
-        {/* Performance recommendations */}
         {feedback.performance_recommendations.length > 0 && (
           <FeedbackSection
             title="Performance Recommendations"
@@ -249,7 +241,6 @@ Review generated on ${formatDate(review.created_at)}
           />
         )}
 
-        {/* Positive aspects */}
         {feedback.positive_aspects.length > 0 && (
           <FeedbackSection
             title="Positive Aspects"
@@ -265,7 +256,6 @@ Review generated on ${formatDate(review.created_at)}
   );
 };
 
-// Feedback sections component
 const FeedbackSection: React.FC<{
   title: string;
   items: string[];

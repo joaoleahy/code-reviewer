@@ -1,6 +1,5 @@
 import { ProgrammingLanguage } from '../types/api';
 
-// Programming language settings
 export const LANGUAGE_CONFIG = {
   [ProgrammingLanguage.PYTHON]: {
     label: 'Python',
@@ -70,7 +69,6 @@ export const LANGUAGE_CONFIG = {
   }
 };
 
-// Review status
 export const STATUS_CONFIG = {
   pending: {
     label: 'Pending',
@@ -98,7 +96,6 @@ export const STATUS_CONFIG = {
   }
 };
 
-// Quality levels
 export const QUALITY_LEVELS = {
   1: { label: 'Very Poor', color: 'red-600', emoji: '😵' },
   2: { label: 'Poor', color: 'red-500', emoji: '😞' },
@@ -112,7 +109,6 @@ export const QUALITY_LEVELS = {
   10: { label: 'Perfect', color: 'green-700', emoji: '🏆' }
 };
 
-// Application settings
 export const APP_CONFIG = {
   name: 'AI Code Reviewer',
   version: '1.0.0',
@@ -128,7 +124,6 @@ export const APP_CONFIG = {
   }
 };
 
-// URLs e links
 export const LINKS = {
   github: 'https://github.com',
   docs: '/docs',
@@ -136,7 +131,6 @@ export const LINKS = {
   support: 'mailto:support@codecreviewer.com'
 };
 
-// System messages
 export const MESSAGES = {
   success: {
     codeSubmitted: 'Code submitted successfully!',
@@ -159,28 +153,25 @@ export const MESSAGES = {
   }
 };
 
-// Regex patterns
 export const PATTERNS = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   url: /^https?:\/\/.+/,
   code: /^[\s\S]*$/
 };
 
-// Chart color themes
 export const CHART_COLORS = [
-  '#3b82f6', // blue-500
-  '#10b981', // green-500
-  '#f59e0b', // yellow-500
-  '#ef4444', // red-500
-  '#8b5cf6', // purple-500
-  '#06b6d4', // cyan-500
-  '#f97316', // orange-500
-  '#84cc16', // lime-500
-  '#ec4899', // pink-500
-  '#6b7280'  // gray-500
+  '#3b82f6',
+  '#10b981',
+  '#f59e0b',
+  '#ef4444',
+  '#8b5cf6',
+  '#06b6d4',
+  '#f97316',
+  '#84cc16',
+  '#ec4899',
+  '#6b7280'
 ];
 
-// Export settings
 export const EXPORT_CONFIG = {
   csv: {
     delimiter: ',',

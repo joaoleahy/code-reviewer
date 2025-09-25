@@ -87,7 +87,6 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
-// Componente de grupo de botões
 export const ButtonGroup: React.FC<{
   children: React.ReactNode;
   className?: string;

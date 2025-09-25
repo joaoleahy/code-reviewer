@@ -53,7 +53,6 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   return spinner;
 };
 
-// Componente de skeleton para loading states
 export const SkeletonLine: React.FC<{ width?: string; height?: string; className?: string }> = ({
   width = 'w-full',
   height = 'h-4',
@@ -62,7 +61,6 @@ export const SkeletonLine: React.FC<{ width?: string; height?: string; className
   <div className={cn('animate-pulse bg-gray-200 rounded', width, height, className)} />
 );
 
-// Skeleton para cards
 export const SkeletonCard: React.FC<{ lines?: number; className?: string }> = ({
   lines = 3,
   className = ''
@@ -77,7 +75,6 @@ export const SkeletonCard: React.FC<{ lines?: number; className?: string }> = ({
   </div>
 );
 
-// Loading overlay para botões
 export const ButtonLoading: React.FC<{ className?: string }> = ({ className = '' }) => (
   <Loader2 className={cn('h-4 w-4 animate-spin', className)} />
 );

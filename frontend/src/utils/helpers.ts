@@ -3,7 +3,6 @@ import { ptBR } from 'date-fns/locale';
 import { QUALITY_LEVELS, STATUS_CONFIG, LANGUAGE_CONFIG } from './constants';
 import { ReviewStatus, ProgrammingLanguage } from '../types/api';
 
-// ========== FORMATAÇÃO DE DATAS ==========
 
 export const formatDate = (date: string | Date, pattern: string = 'dd/MM/yyyy HH:mm') => {
   const dateObj = typeof date === 'string' ? parseISO(date) : date;
@@ -20,7 +19,6 @@ export const formatDateForInput = (date: string | Date) => {
   return format(dateObj, 'yyyy-MM-dd');
 };
 
-// ========== FORMATAÇÃO DE NÚMEROS ==========
 
 export const formatNumber = (num: number, decimals: number = 0) => {
   return new Intl.NumberFormat('pt-BR', {
@@ -40,7 +38,6 @@ export const formatSeconds = (seconds: number) => {
   return `${formatNumber(seconds, 2)}s`;
 };
 
-// ========== FORMATAÇÃO DE STATUS ==========
 
 export const getStatusConfig = (status: ReviewStatus) => {
   return STATUS_CONFIG[status] || STATUS_CONFIG.pending;
@@ -51,7 +48,6 @@ export const getStatusBadgeClass = (status: ReviewStatus) => {
   return `status-${status} text-${config.color}-800 bg-${config.color}-100`;
 };
 
-// ========== FORMATAÇÃO DE LINGUAGENS ==========
 
 export const getLanguageConfig = (language: ProgrammingLanguage | string) => {
   return LANGUAGE_CONFIG[language as ProgrammingLanguage] || LANGUAGE_CONFIG.other;
@@ -61,7 +57,6 @@ export const getLanguageLabel = (language: ProgrammingLanguage | string) => {
   return getLanguageConfig(language).label;
 };
 
-// ========== FORMATAÇÃO DE QUALIDADE ==========
 
 export const getQualityLevel = (score: number) => {
   const clampedScore = Math.max(1, Math.min(10, Math.round(score)));
@@ -76,7 +71,6 @@ export const getQualityEmoji = (score: number) => {
   return getQualityLevel(score).emoji;
 };
 
-// ========== UTILITÁRIOS DE TEXTO ==========
 
 export const truncateText = (text: string, maxLength: number = 100) => {
   if (text.length <= maxLength) return text;
@@ -96,7 +90,6 @@ export const slugify = (text: string) => {
     .trim();
 };
 
-// ========== VALIDAÇÃO ==========
 
 export const isValidEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -116,7 +109,6 @@ export const isValidCode = (code: string, maxLength: number = 10000) => {
   return code.trim().length > 0 && code.length <= maxLength;
 };
 
-// ========== MANIPULAÇÃO DE ARRAYS ==========
 
 export const groupBy = <T>(array: T[], key: keyof T) => {
   return array.reduce((groups, item) => {
@@ -154,7 +146,6 @@ export const unique = <T>(array: T[], key?: keyof T) => {
   });
 };
 
-// ========== UTILITÁRIOS DE CSS ==========
 
 export const cn = (...classes: (string | undefined | null | false | Record<string, boolean>)[]) => {
   return classes
@@ -176,7 +167,6 @@ export const getColorClass = (color: string, type: 'text' | 'bg' | 'border' = 't
   return `${type}-${color}`;
 };
 
-// ========== UTILITÁRIOS DE DADOS ==========
 
 export const calculateSuccessRate = (completed: number, total: number) => {
   if (total === 0) return 0;
@@ -198,13 +188,12 @@ export const getScoreDistributionPercentages = (distribution: Record<string, num
   }, {} as Record<string, number>);
 };
 
-// ========== UTILITÁRIOS DE ERRO ==========
 
 export const getErrorMessage = (error: any): string => {
   if (typeof error === 'string') return error;
   if (error?.message) return error.message;
   if (error?.detail) return error.detail;
-  return 'Erro desconhecido';
+  return 'Unknown error';
 };
 
 export const isNetworkError = (error: any): boolean => {
@@ -213,13 +202,12 @@ export const isNetworkError = (error: any): boolean => {
          error?.message?.includes('fetch');
 };
 
-// ========== UTILITÁRIOS DE STORAGE ==========
 
 export const setLocalStorage = (key: string, value: any) => {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
-    console.warn('Erro ao salvar no localStorage:', error);
+    console.warn('Error saving to localStorage:', error);
   }
 };
 
@@ -228,7 +216,7 @@ export const getLocalStorage = (key: string, defaultValue: any = null) => {
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue;
   } catch (error) {
-    console.warn('Erro ao ler do localStorage:', error);
+    console.warn('Error reading from localStorage:', error);
     return defaultValue;
   }
 };
@@ -237,11 +225,10 @@ export const removeLocalStorage = (key: string) => {
   try {
     localStorage.removeItem(key);
   } catch (error) {
-    console.warn('Erro ao remover do localStorage:', error);
+    console.warn('Error removing from localStorage:', error);
   }
 };
 
-// ========== UTILITÁRIOS DE DEBOUNCE ==========
 
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,

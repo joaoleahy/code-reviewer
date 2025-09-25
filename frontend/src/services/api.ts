@@ -63,7 +63,6 @@ api.interceptors.response.use(
   }
 );
 
-// Interceptador para logs (apenas em desenvolvimento)
 if (process.env.NODE_ENV === 'development') {
   api.interceptors.request.use((request) => {
     console.log('API Request:', request.method?.toUpperCase(), request.url);
@@ -72,7 +71,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export class ApiService {
-  // ========== AUTHENTICATION ==========
   
   static async login(credentials: LoginRequest): Promise<AuthToken> {
     const response: AxiosResponse<AuthToken> = await api.post('/auth/login', credentials);
@@ -93,8 +91,6 @@ export class ApiService {
     await api.post('/auth/logout');
   }
 
-  // ========== REVIEWS ==========
-  
   static async submitReview(submission: CodeSubmission): Promise<ReviewResponse> {
     const response: AxiosResponse<ReviewResponse> = await api.post('/reviews', submission);
     return response.data;
@@ -124,8 +120,6 @@ export class ApiService {
     return response.data;
   }
 
-  // ========== STATISTICS ==========
-  
   static async getStatistics(): Promise<StatsResponse> {
     const response: AxiosResponse<StatsResponse> = await api.get('/stats');
     return response.data;
@@ -158,8 +152,6 @@ export class ApiService {
     return response.data;
   }
 
-  // ========== HEALTH ==========
-  
   static async getHealth(): Promise<HealthCheck> {
     const response: AxiosResponse<HealthCheck> = await api.get('/health');
     return response.data;
@@ -170,8 +162,6 @@ export class ApiService {
     return response.data;
   }
 
-  // ========== UTILITIES ==========
-  
   static async downloadFile(blob: Blob, filename: string): Promise<void> {
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -183,7 +173,6 @@ export class ApiService {
     window.URL.revokeObjectURL(url);
   }
 
-  // Polling para status de review com melhor controle
   static async pollReviewStatus(
     reviewId: string,
     onUpdate: (review: Review) => void,
@@ -192,7 +181,7 @@ export class ApiService {
   ): Promise<Review> {
     let attempts = 0;
     let timeoutId: NodeJS.Timeout | null = null;
-    const start_time = Date.now(); // Tempo de início para timeout de segurança
+    const start_time = Date.now();
     
     return new Promise((resolve, reject) => {
       const cleanup = () => {
@@ -205,12 +194,11 @@ export class ApiService {
       const poll = async () => {
         try {
           attempts++;
-          console.log(`[POLLING] Tentativa ${attempts}/${maxAttempts} para review ${reviewId}`);
+          console.log(`[POLLING] Attempt ${attempts}/${maxAttempts} for review ${reviewId}`);
           
           const review = await this.getReview(reviewId);
           onUpdate(review);
           
-          // Condições de parada - review finalizada ou com erro
           if (review.status === 'completed' || review.status === 'failed') {
             console.log(`[POLLING] Finalizando polling - Status: ${review.status}`);
             cleanup();
@@ -218,50 +206,43 @@ export class ApiService {
             return;
           }
           
-          // PATCH URGENTE: Se review tem error_message, considerar como failed
           if (review.error_message) {
-            console.log(`[POLLING] Review com erro detectada, parando polling`);
+            console.log(`[POLLING] Review with error detected, stopping polling`);
             cleanup();
             resolve(review);
             return;
           }
           
-          // Timeout - máximo de tentativas atingido
           if (attempts >= maxAttempts) {
-            console.log(`[POLLING] Timeout - máximo de tentativas (${maxAttempts}) atingido`);
+            console.log(`[POLLING] Timeout - maximum attempts (${maxAttempts}) reached`);
             cleanup();
-            reject(new Error(`Timeout esperando conclusão da revisão após ${maxAttempts} tentativas`));
+            reject(new Error(`Timeout waiting for review completion after ${maxAttempts} attempts`));
             return;
           }
           
-          // Continuar polling apenas se ainda estiver pending ou in_progress
           if (review.status === 'pending' || review.status === 'in_progress') {
-            // Adicionar timeout de segurança
             const elapsedTime = Date.now() - start_time;
-            if (elapsedTime > 300000) { // 5 minutos máximo
-              console.log(`[POLLING] Timeout de segurança (5min) atingido`);
+            if (elapsedTime > 300000) {
+              console.log(`[POLLING] Safety timeout (5min) reached`);
               cleanup();
-              reject(new Error('Timeout de segurança atingido'));
+              reject(new Error('Safety timeout reached'));
               return;
             }
             timeoutId = setTimeout(poll, intervalMs);
           } else {
-            // Status desconhecido, parar polling
-            console.log(`[POLLING] Status desconhecido (${review.status}), parando polling`);
+            console.log(`[POLLING] Unknown status (${review.status}), stopping polling`);
             cleanup();
             resolve(review);
           }
         } catch (error) {
-          console.error(`[POLLING] Erro na tentativa ${attempts}:`, error);
+          console.error(`[POLLING] Error on attempt ${attempts}:`, error);
           cleanup();
           reject(error);
         }
       };
       
-      // Iniciar primeiro poll
       poll();
       
-      // Cleanup em caso de Promise ser rejeitada externamente
       const originalReject = reject;
       reject = (error) => {
         cleanup();

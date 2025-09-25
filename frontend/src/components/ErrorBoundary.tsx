@@ -30,15 +30,12 @@ class ErrorBoundary extends Component<Props, State> {
       errorInfo
     });
 
-    // Em produção, você enviaria este erro para um serviço de monitoramento
-    // como Sentry, LogRocket, etc.
     if (process.env.NODE_ENV === 'production') {
       this.logErrorToService(error, errorInfo);
     }
   }
 
   private logErrorToService = (error: Error, errorInfo: ErrorInfo) => {
-    // Implementar logging para serviços externos
     console.log('Logging error to external service:', { error, errorInfo });
   };
 
@@ -65,12 +62,12 @@ class ErrorBoundary extends Component<Props, State> {
               </div>
               
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                Oops! Algo deu errado
+                Oops! Something went wrong.
               </h2>
               
               <p className="text-lg text-gray-600 mb-8">
-                Ocorreu um erro inesperado na aplicação. Nossa equipe foi notificada.
-              </p>
+                An unexpected error has occurred in the application. Our team has been notified.
+            </p>
             </div>
 
             <div className="bg-white py-8 px-6 shadow-sm rounded-lg border border-gray-200">
@@ -80,7 +77,7 @@ class ErrorBoundary extends Component<Props, State> {
                   icon={RefreshCcw}
                   fullWidth
                 >
-                  Recarregar Página
+                  Refresh page
                 </Button>
                 
                 <Button
@@ -89,7 +86,7 @@ class ErrorBoundary extends Component<Props, State> {
                   variant="outline"
                   fullWidth
                 >
-                  Voltar ao Início
+                  Back to home
                 </Button>
                 
                 {process.env.NODE_ENV === 'development' && (
@@ -99,21 +96,20 @@ class ErrorBoundary extends Component<Props, State> {
                     fullWidth
                     className="text-sm"
                   >
-                    Tentar Novamente (Dev)
+                    Try again (Dev)
                   </Button>
                 )}
               </div>
 
-              {/* Detalhes do erro apenas em desenvolvimento */}
               {process.env.NODE_ENV === 'development' && this.state.error && (
                 <details className="mt-6 pt-6 border-t border-gray-200">
                   <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Detalhes técnicos (desenvolvimento)
+                    Technical details (development only)
                   </summary>
                   
                   <div className="mt-4 space-y-4">
                     <div>
-                      <h4 className="font-medium text-red-800 mb-2">Erro:</h4>
+                      <h4 className="font-medium text-red-800 mb-2">Error:</h4>
                       <pre className="text-sm bg-red-50 p-3 rounded border border-red-200 overflow-auto">
                         {this.state.error.toString()}
                       </pre>
@@ -121,7 +117,7 @@ class ErrorBoundary extends Component<Props, State> {
                     
                     {this.state.errorInfo && (
                       <div>
-                        <h4 className="font-medium text-red-800 mb-2">Stack Trace:</h4>
+                        <h4 className="font-medium text-red-800 mb-2">Stack trace:</h4>
                         <pre className="text-sm bg-red-50 p-3 rounded border border-red-200 overflow-auto">
                           {this.state.errorInfo.componentStack}
                         </pre>
@@ -134,7 +130,7 @@ class ErrorBoundary extends Component<Props, State> {
 
             <div className="text-center mt-6">
               <p className="text-sm text-gray-500">
-                Se o problema persistir, entre em contato com o suporte.
+                If the problem persists, please contact support.
               </p>
             </div>
           </div>

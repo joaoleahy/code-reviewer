@@ -9,14 +9,12 @@ interface LandingPageProps {
 export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowRegister }) => {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header - Nielsen's Heuristic: Visibility of system status */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <div className="text-2xl font-bold text-orange-600">CodeReviewer</div>
             </div>
-            {/* Nielsen's Heuristic: Recognition rather than recall - Clear CTA buttons */}
             <div className="flex items-center space-x-3">
               <Button 
                 variant="outline" 
@@ -36,10 +34,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowReg
         </div>
       </header>
 
-      {/* Hero Section - Nielsen's Heuristic: Match between system and real world */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
-          {/* Nielsen's Heuristic: Aesthetic and minimalist design */}
           <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-6 leading-tight">
             Smart <span className="text-orange-600">Code Review</span>
           </h1>
@@ -47,7 +43,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowReg
             Revolutionize your code review process with advanced artificial intelligence. 
             Identify issues, improve quality, and accelerate your development.
           </p>
-          {/* Nielsen's Heuristic: User control and freedom - Clear primary action */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
               size="lg" 
@@ -68,7 +63,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowReg
         </div>
       </section>
 
-      {/* Features Section - Nielsen's Heuristic: Help users recognize, diagnose, and recover from errors */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
@@ -79,9 +73,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowReg
           </p>
         </div>
 
-        {/* Nielsen's Heuristic: Consistency and standards - Uniform card design */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Feature 1 */}
           <div className="bg-white rounded-xl border border-gray-200 p-8 text-center hover:border-orange-300 transition-colors duration-200">
             <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +86,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowReg
             </p>
           </div>
 
-          {/* Feature 2 */}
           <div className="bg-white rounded-xl border border-gray-200 p-8 text-center hover:border-orange-300 transition-colors duration-200">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,7 +98,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowReg
             </p>
           </div>
 
-          {/* Feature 3 */}
           <div className="bg-white rounded-xl border border-gray-200 p-8 text-center hover:border-orange-300 transition-colors duration-200">
             <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -122,7 +112,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowReg
         </div>
       </section>
 
-      {/* Benefits Section - Nielsen's Heuristic: Help and documentation */}
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -130,7 +119,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowReg
               <h2 className="text-4xl font-bold text-gray-800 mb-8">
                 Improve your code quality
               </h2>
-              {/* Nielsen's Heuristic: Flexibility and efficiency of use - Scannable benefits */}
               <div className="space-y-6">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
@@ -182,7 +170,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowReg
               </div>
             </div>
             
-            {/* Nielsen's Heuristic: Recognition rather than recall - Clear metrics */}
             <div className="bg-orange-50 rounded-2xl border border-orange-200 p-10">
               <div className="text-center">
                 <div className="text-5xl font-bold text-orange-600 mb-3">10x</div>
@@ -203,7 +190,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowReg
           </div>
         </div>
       </section>
-      {/* Footer - Nielsen's Heuristic: Aesthetic and minimalist design */}
       <footer className="bg-gray-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">

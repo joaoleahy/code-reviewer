@@ -29,7 +29,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const isAuthenticated = !!user;
 
-  // Load user from localStorage on app start
   useEffect(() => {
     const loadStoredAuth = () => {
       try {
@@ -52,7 +51,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     loadStoredAuth();
   }, []);
 
-  // Listen for auth logout events (from API interceptor)
   useEffect(() => {
     const handleAuthLogout = () => {
       setUser(null);
@@ -69,14 +67,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       
       const authData: AuthToken = await ApiService.login({ email, password });
       
-      // Store auth data
       localStorage.setItem(TOKEN_STORAGE_KEY, authData.access_token);
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(authData.user));
       
       setUser(authData.user);
     } catch (err: any) {
       console.error('Login error:', err);
-      setError(err.message || 'Erro ao fazer login. Verifique suas credenciais.');
+      setError(err.message || 'Login failed. Please check your credentials.');
       throw err;
     } finally {
       setIsLoading(false);
@@ -90,14 +87,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       
       const authData: AuthToken = await ApiService.register({ email, name, password });
       
-      // Store auth data
       localStorage.setItem(TOKEN_STORAGE_KEY, authData.access_token);
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(authData.user));
       
       setUser(authData.user);
     } catch (err: any) {
       console.error('Register error:', err);
-      setError(err.message || 'Erro ao criar conta. Tente novamente.');
+      setError(err.message || 'Failed to create account. Please try again.');
       throw err;
     } finally {
       setIsLoading(false);
@@ -106,10 +102,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = (): void => {
     try {
-      // Call logout endpoint (optional, for server-side cleanup)
       ApiService.logout().catch(console.error);
     } finally {
-      // Always clear local data
       localStorage.removeItem(TOKEN_STORAGE_KEY);
       localStorage.removeItem(USER_STORAGE_KEY);
       setUser(null);

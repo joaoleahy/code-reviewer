@@ -22,7 +22,6 @@ const Header: React.FC = () => {
     <header className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo e título */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-3">
               <div className="bg-orange-600 p-2 rounded-lg">
@@ -35,7 +34,6 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
-          {/* Navegação */}
           <nav className="hidden md:flex space-x-8">
             {navigation.map((item) => {
               const Icon = item.icon;
@@ -89,7 +87,6 @@ const Header: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               type="button"

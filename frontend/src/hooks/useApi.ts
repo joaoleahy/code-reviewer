@@ -69,7 +69,6 @@ export const useReviews = (initialFilters: ReviewFilters = {}) => {
   const fetchReviews = useCallback(async (currentFilters: ReviewFilters) => {
     const filtersKey = JSON.stringify(currentFilters);
     
-    // Avoid duplicate requests
     if (isLoading && lastFetchedFilters === filtersKey) {
       console.log('[useReviews] Already loading with same filters, ignoring request');
       return;
@@ -98,7 +97,6 @@ export const useReviews = (initialFilters: ReviewFilters = {}) => {
     }
   }, [isLoading, lastFetchedFilters, clearError, setError, setIsLoading]);
 
-  // Only fetch when filters actually change
   useEffect(() => {
     const filtersKey = JSON.stringify(filters);
     if (filtersKey !== lastFetchedFilters) {
@@ -115,7 +113,7 @@ export const useReviews = (initialFilters: ReviewFilters = {}) => {
   }, []);
 
   const refresh = useCallback(() => {
-    setLastFetchedFilters(''); // Force refetch
+    setLastFetchedFilters('');
     fetchReviews(filters);
   }, [fetchReviews, filters]);
 

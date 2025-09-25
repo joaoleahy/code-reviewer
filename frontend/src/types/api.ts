@@ -1,4 +1,3 @@
-// Tipos para integração com a API
 
 export enum ReviewStatus {
   PENDING = 'pending',
@@ -130,7 +129,6 @@ export interface HealthCheck {
   environment: string;
 }
 
-// Tipos para filtros e paginação
 export interface ReviewFilters {
   page?: number;
   per_page?: number;
@@ -149,7 +147,6 @@ export interface ExportFilters {
   max_score?: number;
 }
 
-// Tipos para UI
 export interface LoadingState {
   isLoading: boolean;
   error?: string;

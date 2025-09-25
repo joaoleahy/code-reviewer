@@ -55,7 +55,6 @@ const CodeSubmissionForm: React.FC<CodeSubmissionFormProps> = ({
       onSubmissionSuccess(response.id);
       reset();
     } catch (error) {
-      // Error already handled by hook
       console.error('Submission error:', error);
     }
   };
@@ -89,7 +88,6 @@ const CodeSubmissionForm: React.FC<CodeSubmissionFormProps> = ({
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {/* Language selection */}
         <div>
           <label htmlFor="language" className="form-label">
             Programming Language
@@ -110,7 +108,6 @@ const CodeSubmissionForm: React.FC<CodeSubmissionFormProps> = ({
           )}
         </div>
 
-        {/* Code field */}
         <div>
           <div className="flex items-center justify-between mb-2">
             <label htmlFor="code" className="form-label">
@@ -160,7 +157,6 @@ result = calculate_average([])`}
           )}
         </div>
 
-        {/* Optional description */}
         <div>
           <label htmlFor="description" className="form-label">
             Description (optional)
@@ -188,7 +184,6 @@ result = calculate_average([])`}
           </div>
         </div>
 
-        {/* Submission error */}
         {submitError && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <div className="flex items-center space-x-2">
@@ -203,7 +198,6 @@ result = calculate_average([])`}
           </div>
         )}
 
-        {/* Submit button */}
         <div className="flex items-center justify-between pt-4 border-t border-gray-200">  
           <Button
             type="submit"
@@ -222,7 +216,6 @@ result = calculate_average([])`}
         </div>
       </form>
 
-        {/* Tips */}
       <div className="mt-6 pt-6 border-t border-gray-200">
         <div className="bg-blue-50 rounded-lg p-4">
           <h4 className="text-blue-800 font-medium mb-2">Tips for better feedback:</h4>

@@ -30,7 +30,6 @@ const AnalyticsPage: React.FC = () => {
     await exportStats(filename);
   };
 
-  // Loading state
   if (isLoading) {
     return (
       <Layout>
@@ -49,7 +48,6 @@ const AnalyticsPage: React.FC = () => {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <Layout>
@@ -71,7 +69,6 @@ const AnalyticsPage: React.FC = () => {
     );
   }
 
-  // No data state
   if (!stats) {
     return (
       <Layout>
@@ -95,13 +92,12 @@ const AnalyticsPage: React.FC = () => {
 
   const successRate = calculateSuccessRate(stats.total_completed, stats.total_reviews);
 
-  // Chart data
   const languageChartData = stats.language_stats.map((lang, index) => ({
     ...lang,
     fill: CHART_COLORS[index % CHART_COLORS.length]
   }));
 
-  const dailyChartData = stats.daily_stats.slice(-30); // last 30 days
+  const dailyChartData = stats.daily_stats.slice(-30);
 
   const scoreDistributionData = Object.entries(stats.score_distribution)
     .map(([score, count]) => ({
@@ -114,7 +110,6 @@ const AnalyticsPage: React.FC = () => {
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -135,7 +130,6 @@ const AnalyticsPage: React.FC = () => {
           </Button>
         </div>
 
-        {/* Métricas principais */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <MetricCard
             title="Total Reviews"
@@ -170,9 +164,7 @@ const AnalyticsPage: React.FC = () => {
           />
         </div>
 
-        {/* Gráficos principais */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Gráfico por linguagens */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-medium text-gray-900 mb-4">
               Reviews by Language
@@ -196,7 +188,6 @@ const AnalyticsPage: React.FC = () => {
             </ResponsiveContainer>
           </div>
 
-          {/* Score distribution */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-medium text-gray-900 mb-4">
               Quality Distribution
@@ -223,7 +214,6 @@ const AnalyticsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Daily trends */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-medium text-gray-900">
@@ -278,7 +268,6 @@ const AnalyticsPage: React.FC = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* Issues mais comuns */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <h3 className="text-lg font-medium text-gray-900 mb-6">
             Most Common Issues
@@ -322,7 +311,6 @@ const AnalyticsPage: React.FC = () => {
   );
 };
 
-// Componente para cards de métricas
 const MetricCard: React.FC<{
   title: string;
   value: string;

@@ -7,7 +7,6 @@ const Footer: React.FC = () => {
     <footer className="bg-white border-t border-gray-200 mt-auto">
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          {/* Logo e informações */}
           <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center space-x-2 text-sm text-gray-600">
               <span>Made with</span>
@@ -19,7 +18,6 @@ const Footer: React.FC = () => {
             </p>
           </div>
 
-          {/* Links */}
           <div className="flex items-center space-x-6 text-sm">
             <a
               href={LINKS.docs}
@@ -46,13 +44,11 @@ const Footer: React.FC = () => {
             </a>
           </div>
 
-          {/* Copyright */}
           <div className="text-xs text-gray-400">
             © 2025 AI Code Reviewer. All rights reserved.
           </div>
         </div>
 
-        {/* Tech stack info */}
         <div className="mt-4 pt-4 border-t border-gray-100">
           <div className="flex flex-wrap justify-center gap-4 text-xs text-gray-400">
             <span className="flex items-center space-x-1">

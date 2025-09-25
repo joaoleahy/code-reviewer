@@ -55,7 +55,7 @@ const HistoryPage: React.FC = () => {
   const handleExport = async () => {
     const endDate = new Date();
     const startDate = new Date();
-    startDate.setMonth(startDate.getMonth() - 3); // Últimos 3 meses
+    startDate.setMonth(startDate.getMonth() - 3);
 
     const filename = `reviews_history_${startDate.toISOString().split('T')[0]}_${endDate.toISOString().split('T')[0]}.csv`;
     
@@ -81,7 +81,6 @@ const HistoryPage: React.FC = () => {
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -113,9 +112,7 @@ const HistoryPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Search and Filters */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-          {/* Barra de busca */}
           <form onSubmit={handleSearch} className="flex items-center space-x-4 mb-4">
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -132,10 +129,8 @@ const HistoryPage: React.FC = () => {
             </Button>
           </form>
 
-          {/* Expandable filters */}
           {showFilters && (
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-gray-200">
-              {/* Filtro por linguagem */}
               <div>
                 <label className="form-label">Language</label>
                 <select
@@ -152,7 +147,6 @@ const HistoryPage: React.FC = () => {
                 </select>
               </div>
 
-              {/* Filtro por status */}
               <div>
                 <label className="form-label">Status</label>
                 <select
@@ -168,7 +162,6 @@ const HistoryPage: React.FC = () => {
                 </select>
               </div>
 
-              {/* Filtro por data */}
               <div>
                 <label className="form-label">Start Date</label>
                 <input
@@ -189,7 +182,6 @@ const HistoryPage: React.FC = () => {
                 />
               </div>
 
-              {/* Clear filters button */}
               <div className="md:col-span-4 flex justify-end pt-2">
                 <Button
                   onClick={clearFilters}
@@ -203,7 +195,6 @@ const HistoryPage: React.FC = () => {
           )}
         </div>
 
-        {/* Review list */}
         {error ? (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
             <h3 className="text-lg font-medium text-gray-900 mb-2">
@@ -240,7 +231,6 @@ const HistoryPage: React.FC = () => {
           </div>
         )}
 
-        {/* Paginação */}
         {pagination.total_pages > 1 && (
           <div className="flex items-center justify-between mt-8">
             <div className="text-sm text-gray-600">
@@ -288,7 +278,6 @@ const HistoryPage: React.FC = () => {
           </div>
         )}
 
-        {/* Details modal */}
         {selectedReview && (
           <ReviewDetailsModal
             reviewId={selectedReview}
@@ -300,7 +289,6 @@ const HistoryPage: React.FC = () => {
   );
 };
 
-// Review details modal component
 const ReviewDetailsModal: React.FC<{
   reviewId: string;
   onClose: () => void;
@@ -351,7 +339,6 @@ const ReviewDetailsModal: React.FC<{
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center space-x-3">
             <div 
@@ -375,9 +362,7 @@ const ReviewDetailsModal: React.FC<{
           </button>
         </div>
 
-        {/* Content */}
         <div className="p-6 space-y-6">
-          {/* Status e informações básicas */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="text-sm font-medium text-gray-700">Status</label>
@@ -397,7 +382,6 @@ const ReviewDetailsModal: React.FC<{
             </div>
           </div>
 
-          {/* Code */}
           <div>
             <label className="text-sm font-medium text-gray-700 mb-2 block">Code</label>
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
@@ -407,7 +391,6 @@ const ReviewDetailsModal: React.FC<{
             </div>
           </div>
 
-          {/* Description */}
           {review.description && (
             <div>
               <label className="text-sm font-medium text-gray-700 mb-2 block">Description</label>
@@ -417,7 +400,6 @@ const ReviewDetailsModal: React.FC<{
             </div>
           )}
 
-          {/* Feedback */}
           {review.feedback && (
             <div className="space-y-4">
               <h3 className="text-lg font-medium text-gray-900">AI Feedback</h3>
@@ -449,7 +431,6 @@ const ReviewDetailsModal: React.FC<{
                 </div>
               </div>
 
-              {/* Issues */}
               {review.feedback.issues.length > 0 && (
                 <div>
                   <h4 className="font-medium text-red-800 mb-2">Identified Issues</h4>
@@ -464,7 +445,6 @@ const ReviewDetailsModal: React.FC<{
                 </div>
               )}
 
-              {/* Sugestões */}
               {review.feedback.suggestions.length > 0 && (
                 <div>
                   <h4 className="font-medium text-blue-800 mb-2">Suggestions</h4>
@@ -479,7 +459,6 @@ const ReviewDetailsModal: React.FC<{
                 </div>
               )}
 
-              {/* Aspectos positivos */}
               {review.feedback.positive_aspects.length > 0 && (
                 <div>
                   <h4 className="font-medium text-green-800 mb-2">Positive Aspects</h4>
@@ -494,7 +473,6 @@ const ReviewDetailsModal: React.FC<{
                 </div>
               )}
 
-              {/* Segurança */}
               {review.feedback.security_concerns.length > 0 && (
                 <div>
                   <h4 className="font-medium text-orange-800 mb-2">Security Concerns</h4>
@@ -509,7 +487,6 @@ const ReviewDetailsModal: React.FC<{
                 </div>
               )}
 
-              {/* Performance */}
               {review.feedback.performance_recommendations.length > 0 && (
                 <div>
                   <h4 className="font-medium text-purple-800 mb-2">Performance Recommendations</h4>
@@ -526,7 +503,6 @@ const ReviewDetailsModal: React.FC<{
             </div>
           )}
 
-          {/* Error message if any */}
           {review.error_message && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
               <h4 className="font-medium text-red-800 mb-2">Processing Error</h4>
@@ -535,7 +511,6 @@ const ReviewDetailsModal: React.FC<{
           )}
         </div>
 
-        {/* Footer */}
         <div className="px-6 py-4 border-t border-gray-200 flex justify-end">
           <Button onClick={onClose} variant="outline">
             Close
@@ -546,7 +521,6 @@ const ReviewDetailsModal: React.FC<{
   );
 };
 
-// Individual review card component
 const ReviewCard: React.FC<{
   review: any;
   onView: () => void;
@@ -559,7 +533,6 @@ const ReviewCard: React.FC<{
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between">
         <div className="flex items-start space-x-4 flex-1">
-          {/* Language icon */}
           <div 
             className="w-12 h-12 rounded-lg flex items-center justify-center text-lg font-bold text-white"
             style={{ backgroundColor: languageConfig.color }}
@@ -606,7 +579,6 @@ const ReviewCard: React.FC<{
           </div>
         </div>
 
-        {/* Actions */}
         <div className="flex items-center space-x-2 ml-4">
           <Button
             onClick={onView}
@@ -620,13 +592,12 @@ const ReviewCard: React.FC<{
             variant="outline"
             size="sm"
             icon={Trash2}
-            title="Deletar"
+            title="Delete"
             className="text-red-600 hover:text-red-700 hover:bg-red-50"
           />
         </div>
       </div>
 
-      {/* Feedback preview */}
       {review.feedback && (
         <div className="mt-4 pt-4 border-t border-gray-100">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">

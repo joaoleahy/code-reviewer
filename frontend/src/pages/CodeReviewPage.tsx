@@ -13,15 +13,12 @@ const CodeReviewPage: React.FC = () => {
   const handleSubmissionSuccess = async (reviewId: string) => {
     setCurrentReviewId(reviewId);
     
-    // Reset previous state
     reset();
     
-    // Start polling if review is not complete
     try {
       await startPolling(reviewId);
     } catch (error) {
       console.error('Polling error:', error);
-      // Manual refresh in case of polling error
       refresh();
     }
   };
@@ -32,7 +29,6 @@ const CodeReviewPage: React.FC = () => {
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Page header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             AI Code Reviewer
@@ -43,14 +39,12 @@ const CodeReviewPage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-          {/* Submission form */}
           <div className="space-y-6">
             <CodeSubmissionForm 
               onSubmissionSuccess={handleSubmissionSuccess}
               isReviewInProgress={showLoading && currentReviewId !== null}
             />
 
-            {/* Code examples */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">
                 Test examples
@@ -80,11 +74,9 @@ result = calculate_average([])`}
             </div>
           </div>
 
-          {/* Review result */}
           <div className="space-y-6">
             {currentReviewId && (
               <>
-                {/* Progress indicator */}
                 {currentReview && (
                   <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                     <h3 className="text-lg font-medium text-gray-900 mb-4">
@@ -144,7 +136,6 @@ result = calculate_average([])`}
   );
 };
 
-// Code examples component
 const ExampleCode: React.FC<{
   title: string;
   language: string;

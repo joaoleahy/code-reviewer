@@ -46,7 +46,6 @@ const CodeHighlight: React.FC<CodeHighlightProps> = ({
 
   return (
     <div className={`relative group ${className}`}>
-      {/* Header */}
       <div className="flex items-center justify-between bg-gray-100 px-4 py-2 rounded-t-lg border-b">
         <div className="flex items-center space-x-2">
           <span className="text-sm font-medium text-gray-700">
