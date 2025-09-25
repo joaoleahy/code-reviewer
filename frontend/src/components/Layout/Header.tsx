@@ -60,7 +60,7 @@ const Header: React.FC = () => {
 
           <div className="flex items-center space-x-4">
             <a
-              href="https://github.com"
+              href="https://github.com/joaoleahy/code-reviewer"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
