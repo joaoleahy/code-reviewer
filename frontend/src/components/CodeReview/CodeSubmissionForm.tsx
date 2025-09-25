@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Send, Code, FileText } from 'lucide-react';
 import Button from '../UI/Button';
-import CodeHighlight from '../UI/CodeHighlight';
 import { ProgrammingLanguage, CodeSubmission } from '../../types/api';
 import { LANGUAGE_CONFIG, APP_CONFIG } from '../../utils/constants';
 import { useCodeSubmission } from '../../hooks/useApi';
@@ -11,6 +10,7 @@ import { cn } from '../../utils/helpers';
 interface CodeSubmissionFormProps {
   onSubmissionSuccess: (reviewId: string) => void;
   className?: string;
+  isReviewInProgress?: boolean;
 }
 
 interface FormData {
@@ -21,9 +21,9 @@ interface FormData {
 
 const CodeSubmissionForm: React.FC<CodeSubmissionFormProps> = ({
   onSubmissionSuccess,
-  className = ''
+  className = '',
+  isReviewInProgress = false
 }) => {
-  const [previewMode, setPreviewMode] = useState(false);
   const { submitCode, isSubmitting, submitError } = useCodeSubmission();
   
   const {
@@ -54,7 +54,6 @@ const CodeSubmissionForm: React.FC<CodeSubmissionFormProps> = ({
       const response = await submitCode(submission);
       onSubmissionSuccess(response.id);
       reset();
-      setPreviewMode(false);
     } catch (error) {
       // Error already handled by hook
       console.error('Submission error:', error);
@@ -63,7 +62,7 @@ const CodeSubmissionForm: React.FC<CodeSubmissionFormProps> = ({
 
   const languageOptions = Object.entries(LANGUAGE_CONFIG).map(([value, config]) => ({
     value,
-    label: `${config.icon} ${config.label}`
+    label: `${config.label}`
   }));
 
   const codeLength = watchedCode?.length || 0;
@@ -78,7 +77,7 @@ const CodeSubmissionForm: React.FC<CodeSubmissionFormProps> = ({
           </div>
           <div>
             <h2 className="text-lg font-semibold text-gray-900">
-              Submit Code for Review
+              Submit code for review
             </h2>
             <p className="text-sm text-gray-600">
               Paste your code below and our AI will provide detailed feedback
@@ -86,16 +85,7 @@ const CodeSubmissionForm: React.FC<CodeSubmissionFormProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setPreviewMode(!previewMode)}
-            className={previewMode ? 'bg-gray-50' : ''}
-          >
-            {previewMode ? 'Edit' : 'Preview'}
-          </Button>
-        </div>
+
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -139,42 +129,31 @@ const CodeSubmissionForm: React.FC<CodeSubmissionFormProps> = ({
             </div>
           </div>
 
-          {previewMode && watchedCode ? (
-            <div className="border border-gray-300 rounded-lg overflow-hidden">
-              <CodeHighlight
-                code={watchedCode}
-                language={watchedLanguage}
-                maxHeight="400px"
-                showCopyButton={false}
-              />
-            </div>
-          ) : (
-            <textarea
-              id="code"
-              {...register('code', {
-                required: 'Paste your code here',
-                maxLength: {
-                  value: APP_CONFIG.maxCodeLength,
-                  message: `Code cannot exceed ${APP_CONFIG.maxCodeLength} characters`
-                },
-                validate: {
-                  notEmpty: (value) => value.trim().length > 0 || 'Code cannot be empty'
-                }
-              })}
-              className={cn(
-                'form-input font-mono text-sm resize-none',
-                isCodeTooLong && 'border-red-300 focus:border-red-500 focus:ring-red-500'
-              )}
-              rows={15}
-              placeholder={`Paste your ${LANGUAGE_CONFIG[watchedLanguage]?.label} code here...
+          <textarea
+            id="code"
+            {...register('code', {
+              required: 'Paste your code here',
+              maxLength: {
+                value: APP_CONFIG.maxCodeLength,
+                message: `Code cannot exceed ${APP_CONFIG.maxCodeLength} characters`
+              },
+              validate: {
+                notEmpty: (value) => value.trim().length > 0 || 'Code cannot be empty'
+              }
+            })}
+            className={cn(
+              'form-input font-mono text-sm resize-none',
+              isCodeTooLong && 'border-red-300 focus:border-red-500 focus:ring-red-500'
+            )}
+            rows={15}
+            placeholder={`Paste your ${LANGUAGE_CONFIG[watchedLanguage]?.label} code here...
 
 Example:
 def calculate_average(numbers):
     return sum(numbers) / len(numbers)
 
 result = calculate_average([])`}
-            />
-          )}
+          />
 
           {errors.code && (
             <p className="form-error">{errors.code.message}</p>
@@ -225,19 +204,20 @@ result = calculate_average([])`}
         )}
 
         {/* Submit button */}
-        <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-          <div className="text-xs text-gray-500">
-            Your review will be processed in a few seconds
-          </div>
-          
+        <div className="flex items-center justify-between pt-4 border-t border-gray-200">  
           <Button
             type="submit"
             loading={isSubmitting}
             icon={Send}
             size="lg"
-            disabled={isCodeTooLong}
+            disabled={isCodeTooLong || isReviewInProgress}
           >
-            {isSubmitting ? 'Sending...' : 'Send for Review'}
+            {isSubmitting 
+              ? 'Sending...' 
+              : isReviewInProgress 
+                ? 'Review in Progress...' 
+                : 'Send for Review'
+            }
           </Button>
         </div>
       </form>
