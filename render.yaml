@@ -1,0 +1,34 @@
+services:
+  # Web Service (Backend + Frontend)
+  - type: web
+    name: codereviewer
+    runtime: docker
+    dockerfilePath: ./Dockerfile.render
+    branch: main
+    healthCheckPath: /api/health
+    plan: starter # free tier
+    envVars:
+      - key: MONGODB_URI
+        fromDatabase:
+          name: codereviewer-db
+          property: connectionString
+      - key: OPENAI_API_KEY
+        sync: false # will be set manually
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ENVIRONMENT
+        value: production
+      - key: FRONTEND_URL
+        value: https://codereviewer.onrender.com
+      - key: BACKEND_URL
+        value: https://codereviewer.onrender.com
+      - key: RATE_LIMIT_PER_HOUR
+        value: "100"
+
+databases:
+  # MongoDB Database
+  - name: codereviewer-db
+    databaseName: codereviewer
+    plan: starter # free tier
