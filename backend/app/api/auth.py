@@ -7,7 +7,7 @@ from ..utils.rate_limiter import RateLimiter
 from ..core.database import get_database
 from bson import ObjectId
 
-router = APIRouter(prefix="/api/auth", tags=["authentication"])
+router = APIRouter(tags=["authentication"])
 rate_limiter = RateLimiter()
 
 @router.post("/register", response_model=AuthToken)
