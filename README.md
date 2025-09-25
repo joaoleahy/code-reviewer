@@ -118,7 +118,45 @@ docker-compose --profile tools up mongo-express
 - `GET /api/stats` - Aggregated statistics
 - `GET /api/health` - Health check
 
-## 🧪 Example Tests
+## 🧪 Testing
+
+### Backend Tests
+
+The backend includes a comprehensive test suite designed for easy execution without external dependencies.
+
+```bash
+cd backend
+
+# Run all tests
+python -m pytest tests/test_simple.py -v
+
+# Output example:
+# 17 passed in 0.75s ✅
+```
+
+#### Test Coverage
+
+The test suite covers:
+
+- **JWT Authentication** - Token creation and validation
+- **Rate Limiting** - Request throttling functionality  
+- **AI Service** - Prompt building and service initialization
+- **Review Service** - Core review functionality
+- **Data Models** - User and Review models with validation
+- **Configuration** - Settings loading and environment detection
+- **Utilities** - Import validation and helper functions
+- **Programming Languages** - Supported language validation
+- **Review Statuses** - Status enumeration validation
+
+#### Features
+
+- ✅ **Fast execution** (< 1 second)
+- ✅ **No external dependencies** (MongoDB, OpenAI API not required)
+- ✅ **Clean setup** - Automatic test environment configuration
+- ✅ **Comprehensive coverage** - 9 test classes, 17 test methods
+- ✅ **Easy maintenance** - Simple structure without mocks
+
+### Example Tests
 
 ### Python (with issues):
 ```python
