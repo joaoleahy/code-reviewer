@@ -64,7 +64,7 @@ const UserMenu: React.FC = () => {
                 className="flex items-center w-full px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors"
               >
                 <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
+                Sign out
               </button>
             </div>
           </div>

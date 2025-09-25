@@ -225,7 +225,7 @@ result = calculate_average([])`}
         {/* Tips */}
       <div className="mt-6 pt-6 border-t border-gray-200">
         <div className="bg-blue-50 rounded-lg p-4">
-          <h4 className="text-blue-800 font-medium mb-2">💡 Tips for better feedback:</h4>
+          <h4 className="text-blue-800 font-medium mb-2">Tips for better feedback:</h4>
           <ul className="text-blue-700 text-sm space-y-1">
             <li>• Include complete and executable code when possible</li>
             <li>• Add comments in complex parts</li>
