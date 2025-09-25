@@ -25,10 +25,29 @@ const HistoryPage: React.FC = () => {
     updateFilters,
     changePage,
     error,
-    refresh
+    refresh,
+    isLoading
   } = useReviews();
 
   const { exportReviews, isExporting } = useExport();
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center py-20">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-orange-600 mx-auto mb-6"></div>
+            <h3 className="text-xl font-medium text-gray-900 mb-2">
+              Loading History
+            </h3>
+            <p className="text-gray-600">
+              Fetching your code review history...
+            </p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   const handleDeleteReview = async (reviewId: string) => {
     if (!window.confirm('Are you sure you want to delete this review? This action cannot be undone.')) {
