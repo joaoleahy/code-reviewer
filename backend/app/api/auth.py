@@ -5,7 +5,6 @@ from ..utils.auth import jwt_handler
 from ..utils.dependencies import require_auth, optional_auth
 from ..utils.rate_limiter import RateLimiter
 from ..core.database import get_database
-from bson import ObjectId
 
 router = APIRouter(tags=["authentication"])
 rate_limiter = RateLimiter()
