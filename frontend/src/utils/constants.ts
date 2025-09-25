@@ -7,77 +7,66 @@ export const LANGUAGE_CONFIG = {
     extension: '.py',
     highlightLanguage: 'python',
     color: '#3776ab',
-    icon: '🐍'
   },
   [ProgrammingLanguage.JAVASCRIPT]: {
     label: 'JavaScript',
     extension: '.js',
     highlightLanguage: 'javascript',
     color: '#f7df1e',
-    icon: '🟨'
   },
   [ProgrammingLanguage.TYPESCRIPT]: {
     label: 'TypeScript',
     extension: '.ts',
     highlightLanguage: 'typescript',
     color: '#3178c6',
-    icon: '🔷'
   },
   [ProgrammingLanguage.JAVA]: {
     label: 'Java',
     extension: '.java',
     highlightLanguage: 'java',
     color: '#ed8b00',
-    icon: '☕'
   },
   [ProgrammingLanguage.CPP]: {
     label: 'C++',
     extension: '.cpp',
     highlightLanguage: 'cpp',
     color: '#00599c',
-    icon: '⚡'
   },
   [ProgrammingLanguage.CSHARP]: {
     label: 'C#',
     extension: '.cs',
     highlightLanguage: 'csharp',
     color: '#239120',
-    icon: '#️⃣'
   },
   [ProgrammingLanguage.GO]: {
     label: 'Go',
     extension: '.go',
     highlightLanguage: 'go',
     color: '#00add8',
-    icon: '🐹'
   },
   [ProgrammingLanguage.RUST]: {
     label: 'Rust',
     extension: '.rs',
     highlightLanguage: 'rust',
     color: '#000000',
-    icon: '🦀'
   },
   [ProgrammingLanguage.PHP]: {
     label: 'PHP',
     extension: '.php',
     highlightLanguage: 'php',
     color: '#777bb4',
-    icon: '🐘'
   },
   [ProgrammingLanguage.RUBY]: {
     label: 'Ruby',
     extension: '.rb',
     highlightLanguage: 'ruby',
     color: '#cc342d',
-    icon: '💎'
   },
   [ProgrammingLanguage.OTHER]: {
     label: 'Others',
     extension: '.txt',
     highlightLanguage: 'text',
     color: '#6b7280',
-    icon: '📝'
   }
 };
 
