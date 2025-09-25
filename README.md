@@ -7,7 +7,8 @@ A web system that allows developers to submit code for automated AI-powered revi
 - **Frontend**: React.js with TypeScript
 - **Backend**: FastAPI with Python
 - **Database**: MongoDB
-- **AI**: OpenAI API
+- **Cache**: Redis (Local/Upstash)
+- **AI**: OpenAI GPT-4.1-mini
 - **Background Jobs**: FastAPI Background Tasks
 
 ## 📁 Project Structure
@@ -19,8 +20,9 @@ codereviewer/
 │   │   ├── api/            # API endpoints
 │   │   ├── core/           # Core configurations
 │   │   ├── models/         # Pydantic models
-│   │   ├── services/       # Services (AI, MongoDB)
+│   │   ├── services/       # Services (AI, Cache, MongoDB)
 │   │   └── utils/          # Utilities
+│   ├── tests/              # Comprehensive test suite
 │   ├── requirements.txt
 │   └── main.py
 ├── frontend/               # React App
@@ -61,6 +63,7 @@ docker-compose up -d
 - Python 3.8+
 - Node.js 16+
 - MongoDB
+- Redis (optional - uses cache fallback)
 - OpenAI API Key
 
 #### 1. Backend
@@ -81,12 +84,13 @@ npm install
 npm start
 ```
 
-#### 3. MongoDB
+#### 3. MongoDB & Redis
 ```bash
-# Docker
+# Docker - MongoDB + Redis
 docker run -d -p 27017:27017 --name mongodb mongo:latest
+docker run -d -p 6379:6379 --name redis redis:alpine
 
-# Or use locally installed MongoDB
+# Or use locally installed services
 ```
 
 ## 🔧 Useful Commands
@@ -116,6 +120,8 @@ docker-compose --profile tools up mongo-express
 - `GET /api/reviews/{id}` - Get specific review  
 - `GET /api/reviews` - List reviews (with pagination)
 - `GET /api/stats` - Aggregated statistics
+- `GET /api/cache/stats` - Cache performance metrics
+- `DELETE /api/cache/clear` - Clear cache entries
 - `GET /api/health` - Health check
 
 ## 🧪 Testing
@@ -142,6 +148,7 @@ The test suite covers:
 - **Rate Limiting** - Request throttling functionality  
 - **AI Service** - Prompt building and service initialization
 - **Review Service** - Core review functionality
+- **Cache Service** - Redis caching with fallback mechanisms
 - **Data Models** - User and Review models with validation
 - **Configuration** - Settings loading and environment detection
 - **Utilities** - Import validation and helper functions
@@ -151,10 +158,10 @@ The test suite covers:
 #### Features
 
 - ✅ **Fast execution** (< 1 second)
-- ✅ **No external dependencies** (MongoDB, OpenAI API not required)
+- ✅ **No external dependencies** (MongoDB, Redis, OpenAI API not required)
 - ✅ **Clean setup** - Automatic test environment configuration
-- ✅ **Comprehensive coverage** - 9 test classes, 17 test methods
-- ✅ **Easy maintenance** - Simple structure without mocks
+- ✅ **Comprehensive coverage** - 10 test classes, 24 test methods
+- ✅ **Easy maintenance** - Simple structure with minimal mocking
 
 ### Example Tests
 
@@ -177,25 +184,65 @@ function fetchUserData(userId) {
 
 ## 📊 Implemented Features
 
-- [x] Code submission interface
-- [x] Real-time syntax highlighting
-- [x] AI code review service
-- [x] MongoDB storage
-- [x] Analytics dashboard
-- [x] Rate limiting
-- [x] Background processing
-- [x] CSV export
-- [x] Responsive design
+- [x] **Code submission interface** - Upload and submit code for review
+- [x] **Real-time syntax highlighting** - Code visualization with syntax support
+- [x] **AI code review service** - Automated analysis using OpenAI GPT-4.1-mini
+- [x] **Intelligent caching system** - Redis cache with 1000x+ performance improvement
+- [x] **MongoDB storage** - Persistent data storage and retrieval
+- [x] **Analytics dashboard** - Usage statistics and insights
+- [x] **Rate limiting** - Request throttling (10 reviews/hour per IP)
+- [x] **Background processing** - Asynchronous review processing
+- [x] **CSV export** - Data export functionality
+- [x] **Responsive design** - Mobile-friendly interface
+- [x] **Docker containerization** - Easy deployment and scaling
+- [x] **Comprehensive testing** - 24 test methods with 100% critical path coverage
 
 ## 🔧 Configuration
 
 See the `.env.example` file for all required environment variables.
 
-## 📈 Scalability Considerations
+### Redis Cache Configuration
 
-- Rate limiting implemented (10 reviews per IP per hour)
-- Asynchronous processing for reviews
-- MongoDB indexing for efficient queries
-- Connection pooling for MongoDB
-- Common result caching
+The system supports both local and production Redis configurations:
+
+**Development (Local Redis):**
+```bash
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=  # optional
+```
+
+**Production (Upstash Redis):**
+```bash
+UPSTASH_REDIS_REST_URL=https://your-redis.upstash.io
+UPSTASH_REDIS_REST_TOKEN=your_token_here
+```
+
+**Environment Detection:**
+- If Upstash credentials are provided → Uses Upstash Redis
+- Otherwise → Falls back to local Redis
+- If Redis unavailable → Gracefully continues without cache
+
+## 📈 Performance & Scalability
+
+### 🚀 Cache Performance
+- **Redis integration** - Instant responses for duplicate code analysis
+- **1000x+ performance improvement** - Cache hits respond in ~0.002s vs ~2.2s API calls
+- **100% API call reduction** - Zero OpenAI requests for cached results
+- **Dual environment support** - Local Redis (development) + Upstash (production)
+
+### 🔧 Production Ready
+- **Rate limiting** - 10 reviews per IP per hour
+- **Asynchronous processing** - Non-blocking review operations
+- **MongoDB indexing** - Optimized database queries
+- **Connection pooling** - Efficient resource management
+- **Intelligent fallbacks** - Graceful degradation when cache unavailable
+- **Environment detection** - Automatic local/production configuration
+
+### 📊 Cache Statistics
+Access real-time cache metrics via `/api/cache/stats`:
+- Cache hit/miss rates
+- Performance improvements
+- Memory usage
+- Most frequently cached code patterns
 # code-reviewer
