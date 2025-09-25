@@ -1,17 +1,11 @@
-# Use Ubuntu as base and install Python
-FROM ubuntu:22.04
+# Use official Python runtime as base image
+FROM python:3.11-slim
 
-# Install Python and dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    python3.11 \
-    python3.11-pip \
-    python3.11-dev \
-    python3.11-venv \
     gcc \
     curl \
     build-essential \
-    && ln -s /usr/bin/python3.11 /usr/bin/python \
-    && ln -s /usr/bin/pip3.11 /usr/bin/pip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
