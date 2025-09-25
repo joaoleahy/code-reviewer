@@ -1,9 +1,11 @@
 import httpx
 import json
+import time
 from typing import Optional
 
 from ..core.config import settings
 from ..models.review import ReviewFeedback, ProgrammingLanguage
+from .cache_service import cache_service
 
 
 class AIService:
@@ -13,9 +15,17 @@ class AIService:
         
     async def review_code(self, code: str, language: ProgrammingLanguage, description: Optional[str] = None) -> ReviewFeedback:
         """
-        Review code using OpenAI GPT-4.1-mini via direct HTTP API
+        Review code using OpenAI GPT-4.1-mini via direct HTTP API with caching
         """
+        start_time = time.time()
+        
         try:
+            cached_feedback = await cache_service.get_cached_feedback(code, language, description)
+            if cached_feedback:
+                print(f"Returned cached result in {time.time() - start_time:.3f}s")
+                return cached_feedback
+            
+            print("Cache miss - calling AI service...")
             prompt = self._build_review_prompt(code, language, description)
                         
             headers = {
@@ -58,6 +68,10 @@ class AIService:
             
             feedback = self._parse_feedback(feedback_data)
             
+            processing_time = time.time() - start_time
+            await cache_service.cache_feedback(code, language, feedback, description, processing_time)
+            
+            print(f"AI analysis completed in {processing_time:.3f}s")
             return feedback
             
         except json.JSONDecodeError as e:
@@ -136,5 +150,4 @@ Return JSON only:
             )
 
 
-# Singleton service instance
 ai_service = AIService()

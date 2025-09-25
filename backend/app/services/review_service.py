@@ -55,18 +55,15 @@ class ReviewService:
         start_time = time.time()
         
         try:
-            # Update status to in_progress
             await db.reviews.update_one(
                 {"_id": ObjectId(review_id)},
                 {"$set": {"status": ReviewStatus.IN_PROGRESS}}
             )
             
-            # Fetch review
             review_doc = await db.reviews.find_one({"_id": ObjectId(review_id)})
             if not review_doc:
                 raise Exception("Review not found")
             
-            # Perform AI review
             feedback = await ai_service.review_code(
                 code=review_doc["code"],
                 language=review_doc["language"],
@@ -136,7 +133,6 @@ class ReviewService:
         try:
             db = get_database()
             
-            # Build filters
             filters = {}
             if user_id:
                 filters["user_id"] = user_id
@@ -156,7 +152,6 @@ class ReviewService:
             
             total = await db.reviews.count_documents(filters)
             
-            # Calculate pagination
             skip = (page - 1) * per_page
             total_pages = (total + per_page - 1) // per_page
             
