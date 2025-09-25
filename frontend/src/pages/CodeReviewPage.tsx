@@ -47,6 +47,7 @@ const CodeReviewPage: React.FC = () => {
           <div className="space-y-6">
             <CodeSubmissionForm 
               onSubmissionSuccess={handleSubmissionSuccess}
+              isReviewInProgress={showLoading && currentReviewId !== null}
             />
 
             {/* Code examples */}
@@ -116,7 +117,7 @@ result = calculate_average([])`}
                     <span className="text-2xl">🤖</span>
                   </div>
                   <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    Waiting for Code
+                    Waiting for code
                   </h3>
                   <p className="text-gray-600 mb-6">
                     Submit your code in the form to receive detailed analysis
@@ -126,39 +127,17 @@ result = calculate_average([])`}
                       Our AI analyzes:
                     </h4>
                     <ul className="text-sm text-gray-600 space-y-1">
-                      <li>✅ Code quality and structure</li>
-                      <li>🔒 Security vulnerabilities</li>
-                      <li>⚡ Optimization opportunities</li>
-                      <li>🎯 Language best practices</li>
-                      <li>🐛 Potential bugs</li>
+                      <li>Code quality and structure</li>
+                      <li>Security vulnerabilities</li>
+                      <li>Optimization opportunities</li>
+                      <li>Language best practices</li>
+                      <li>Potential bugs</li>
                     </ul>
                   </div>
                 </div>
               </div>
             )}
           </div>
-        </div>
-
-        {/* Quick statistics */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <StatCard
-            title="Reviews Completed"
-            value="10,234"
-            icon="📊"
-            description="Code analyzed today"
-          />
-          <StatCard
-            title="Supported Languages"
-            value="10+"
-            icon="💻"
-            description="Python, JavaScript, Java, C++..."
-          />
-          <StatCard
-            title="Average Time"
-            value="< 5s"
-            icon="⚡"
-            description="Super fast analysis"
-          />
         </div>
       </div>
     </Layout>
@@ -183,21 +162,6 @@ const ExampleCode: React.FC<{
       <code>{code}</code>
     </pre>
     <p className="text-xs text-gray-600 mt-2">{description}</p>
-  </div>
-);
-
-// Statistics cards component
-const StatCard: React.FC<{
-  title: string;
-  value: string;
-  icon: string;
-  description: string;
-}> = ({ title, value, icon, description }) => (
-  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center">
-    <div className="text-2xl mb-2">{icon}</div>
-    <div className="text-2xl font-bold text-gray-900 mb-1">{value}</div>
-    <div className="text-sm font-medium text-gray-900 mb-1">{title}</div>
-    <div className="text-xs text-gray-600">{description}</div>
   </div>
 );
 
