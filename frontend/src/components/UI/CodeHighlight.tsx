@@ -49,7 +49,6 @@ const CodeHighlight: React.FC<CodeHighlightProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between bg-gray-100 px-4 py-2 rounded-t-lg border-b">
         <div className="flex items-center space-x-2">
-          <span className="text-lg">{languageConfig.icon}</span>
           <span className="text-sm font-medium text-gray-700">
             {languageConfig.label}
           </span>

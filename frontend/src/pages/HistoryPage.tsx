@@ -146,7 +146,7 @@ const HistoryPage: React.FC = () => {
                   <option value="">All</option>
                   {Object.entries(LANGUAGE_CONFIG).map(([value, config]) => (
                     <option key={value} value={value}>
-                      {config.icon} {config.label}
+                      {config.label}
                     </option>
                   ))}
                 </select>
@@ -355,10 +355,10 @@ const ReviewDetailsModal: React.FC<{
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center space-x-3">
             <div 
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white"
               style={{ backgroundColor: languageConfig.color }}
             >
-              {languageConfig.icon}
+              {languageConfig.label.charAt(0)}
             </div>
             <div>
               <h2 className="text-xl font-semibold text-gray-900">
@@ -564,7 +564,7 @@ const ReviewCard: React.FC<{
             className="w-12 h-12 rounded-lg flex items-center justify-center text-lg font-bold text-white"
             style={{ backgroundColor: languageConfig.color }}
           >
-            {languageConfig.icon}
+            {languageConfig.label.charAt(0)}
           </div>
 
           <div className="flex-1 min-w-0">
