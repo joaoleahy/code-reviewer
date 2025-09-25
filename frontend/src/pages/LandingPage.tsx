@@ -8,182 +8,194 @@ interface LandingPageProps {
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowRegister }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
+    <div className="min-h-screen bg-gray-50">
+      {/* Header - Nielsen's Heuristic: Visibility of system status */}
+      <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <div className="text-2xl font-bold text-indigo-600">CodeReviewer</div>
+              <div className="text-2xl font-bold text-orange-600">CodeReviewer</div>
             </div>
-            <div className="space-x-4">
+            {/* Nielsen's Heuristic: Recognition rather than recall - Clear CTA buttons */}
+            <div className="flex items-center space-x-3">
               <Button 
                 variant="outline" 
-                className="border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white"
+                className="border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white transition-colors duration-200"
                 onClick={onShowLogin}
               >
                 Sign In
               </Button>
               <Button 
-                className="bg-indigo-600 text-white hover:bg-indigo-700"
+                className="bg-orange-600 text-white hover:bg-orange-700 transition-colors duration-200"
                 onClick={onShowRegister}
               >
-                Sign Up
+                Start for free
               </Button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero Section - Nielsen's Heuristic: Match between system and real world */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Intelligent <span className="text-indigo-600">Code Analysis</span>
+          {/* Nielsen's Heuristic: Aesthetic and minimalist design */}
+          <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-6 leading-tight">
+            Smart <span className="text-orange-600">Code Review</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 mb-10 max-w-4xl mx-auto leading-relaxed">
             Revolutionize your code review process with advanced artificial intelligence. 
             Identify issues, improve quality, and accelerate your development.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* Nielsen's Heuristic: User control and freedom - Clear primary action */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
               size="lg" 
-              className="bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg"
+              className="bg-orange-600 text-white hover:bg-orange-700 px-8 py-4 text-lg font-semibold transition-all duration-200 transform hover:scale-105"
               onClick={onShowRegister}
             >
-              Start Free
+              Start for free
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
-              className="border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white shadow-lg"
+              className="border-gray-400 text-gray-600 hover:bg-gray-100 hover:text-gray-800 px-8 py-4 text-lg transition-colors duration-200"
               onClick={onShowLogin}
             >
-              I already have an account
+              Already have an account?
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {/* Features Section - Nielsen's Heuristic: Help users recognize, diagnose, and recover from errors */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-gray-800 mb-4">
             Why choose CodeReviewer?
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-xl text-gray-600">
             Advanced tools for code analysis that your team needs
           </p>
         </div>
-        
+
+        {/* Nielsen's Heuristic: Consistency and standards - Uniform card design */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Feature 1 */}
-          <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-            <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-white rounded-xl border border-gray-200 p-8 text-center hover:border-orange-300 transition-colors duration-200">
+            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Advanced AI</h3>
-            <p className="text-gray-600">
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">Advanced AI</h3>
+            <p className="text-gray-600 leading-relaxed">
               Intelligent analysis that identifies complex issues and suggests improvements based on best practices
             </p>
           </div>
 
           {/* Feature 2 */}
-          <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white rounded-xl border border-gray-200 p-8 text-center hover:border-orange-300 transition-colors duration-200">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Fast Analysis</h3>
-            <p className="text-gray-600">
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">Lightning Fast</h3>
+            <p className="text-gray-600 leading-relaxed">
               Results in seconds, not hours. Accelerate your development process without losing quality
             </p>
           </div>
 
           {/* Feature 3 */}
-          <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white rounded-xl border border-gray-200 p-8 text-center hover:border-orange-300 transition-colors duration-200">
+            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Detailed Metrics</h3>
-            <p className="text-gray-600">
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">Detailed Metrics</h3>
+            <p className="text-gray-600 leading-relaxed">
               Track comprehensive statistics and code quality evolution over time
             </p>
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="bg-white py-16">
+      {/* Benefits Section - Nielsen's Heuristic: Help and documentation */}
+      <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="text-4xl font-bold text-gray-800 mb-8">
                 Improve your code quality
               </h2>
-              <div className="space-y-4">
+              {/* Nielsen's Heuristic: Flexibility and efficiency of use - Scannable benefits */}
+              <div className="space-y-6">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
+                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                      <span className="text-orange-600 font-bold text-sm">✓</span>
                     </div>
                   </div>
-                  <div className="ml-3">
-                    <h3 className="text-lg font-medium text-gray-900">Bug Detection</h3>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">Bug Detection</h3>
                     <p className="text-gray-600">Identifies potential issues before code execution</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
+                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                      <span className="text-orange-600 font-bold text-sm">✓</span>
                     </div>
                   </div>
-                  <div className="ml-3">
-                    <h3 className="text-lg font-medium text-gray-900">Performance Optimization</h3>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">Security Analysis</h3>
+                    <p className="text-gray-600">Identifies security vulnerabilities and provides solutions</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                      <span className="text-orange-600 font-bold text-sm">✓</span>
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">Performance Optimization</h3>
                     <p className="text-gray-600">Suggestions to improve code efficiency and speed</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
+                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                      <span className="text-orange-600 font-bold text-sm">✓</span>
                     </div>
                   </div>
-                  <div className="ml-3">
-                    <h3 className="text-lg font-medium text-gray-900">Code Standards</h3>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">Code Standards</h3>
                     <p className="text-gray-600">Ensures consistency and adherence to best practices</p>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="bg-gray-50 rounded-lg p-8">
+            {/* Nielsen's Heuristic: Recognition rather than recall - Clear metrics */}
+            <div className="bg-orange-50 rounded-2xl border border-orange-200 p-10">
               <div className="text-center">
-                <div className="text-4xl font-bold text-indigo-600 mb-2">10x</div>
-                <div className="text-gray-600 mb-6">Faster than manual review</div>
+                <div className="text-5xl font-bold text-orange-600 mb-3">10x</div>
+                <div className="text-gray-700 mb-8 text-lg">Faster than manual review</div>
                 
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl font-bold text-gray-900">95%</div>
-                    <div className="text-sm text-gray-600">Detection accuracy</div>
+                <div className="grid grid-cols-2 gap-8 text-center">
+                  <div className="p-6">
+                    <div className="text-4xl font-bold text-gray-800">95%</div>
+                    <div className="text-lg text-gray-600 mt-2">Detection accuracy</div>
                   </div>
-                  <div>
-                    <div className="text-2xl font-bold text-gray-900">24/7</div>
-                    <div className="text-sm text-gray-600">Availability</div>
+                  <div className="p-6">
+                    <div className="text-4xl font-bold text-gray-800">24/7</div>
+                    <div className="text-lg text-gray-600 mt-2">Availability</div>
                   </div>
                 </div>
               </div>
@@ -191,13 +203,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onShowLogin, onShowReg
           </div>
         </div>
       </section>
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
+      {/* Footer - Nielsen's Heuristic: Aesthetic and minimalist design */}
+      <footer className="bg-gray-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="text-xl font-bold text-indigo-400 mb-2">CodeReviewer</div>
-            <p className="text-gray-400">
-              © 2025 CodeReviewer. Intelligent code analysis for modern developers.
+            <div className="text-2xl font-bold text-orange-400 mb-3">CodeReviewer</div>
+            <p className="text-gray-300 text-lg">
+              © 2025 CodeReviewer. Smart code review for modern developers.
+            </p>
+            <p className="text-gray-400 text-sm mt-2">
+              Making code review faster, smarter, and more reliable.
             </p>
           </div>
         </div>
