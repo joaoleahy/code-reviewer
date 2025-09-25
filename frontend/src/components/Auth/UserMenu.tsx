@@ -28,7 +28,7 @@ const UserMenu: React.FC = () => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors"
       >
-        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+        <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
           {getInitials(user.name)}
         </div>
         <span className="hidden sm:block text-gray-700 font-medium">{user.name}</span>
@@ -44,7 +44,7 @@ const UserMenu: React.FC = () => {
           <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border z-20">
             <div className="p-4 border-b border-gray-100">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
+                <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-medium">
                   {getInitials(user.name)}
                 </div>
                 <div className="flex-1 min-w-0">

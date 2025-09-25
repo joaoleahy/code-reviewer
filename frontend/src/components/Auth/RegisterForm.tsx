@@ -97,7 +97,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     
     if (score <= 1) return { strength: 'Weak', color: 'bg-red-500', width: '25%' };
     if (score === 2) return { strength: 'Fair', color: 'bg-yellow-500', width: '50%' };
-    if (score === 3) return { strength: 'Good', color: 'bg-blue-500', width: '75%' };
+    if (score === 3) return { strength: 'Good', color: 'bg-orange-500', width: '75%' };
     return { strength: 'Strong', color: 'bg-green-500', width: '100%' };
   };
 
@@ -117,12 +117,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   const passwordStrength = password ? getPasswordStrength(password) : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <button
             onClick={onBack}
-            className="mb-4 text-indigo-600 hover:text-indigo-500 flex items-center"
+            className="mb-4 text-orange-600 hover:text-orange-500 flex items-center transition-colors duration-200"
           >
             <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -131,13 +131,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           </button>
           
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-indigo-600 mb-2">CodeReviewer</h1>
-            <h2 className="text-2xl font-bold text-gray-900">Create your account</h2>
+            <h2 className="text-2xl font-bold text-gray-800">Create your account</h2>
             <p className="mt-2 text-sm text-gray-600">
-              Or{' '}
+              or{' '}
               <button
                 onClick={onShowLogin}
-                className="font-medium text-indigo-600 hover:text-indigo-500"
+                className="font-medium text-orange-600 hover:text-orange-500 transition-colors duration-200"
               >
                 sign in to your existing account
               </button>
@@ -170,7 +169,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               onBlur={() => validateEmail(email)}
               className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                 emailError ? 'border-red-300' : 'border-gray-300'
-              } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+              } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm transition-colors duration-200`}
               placeholder="your@email.com"
             />
             {emailError && (
@@ -196,7 +195,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               onBlur={() => validateName(name)}
               className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                 nameError ? 'border-red-300' : 'border-gray-300'
-              } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+              } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm transition-colors duration-200`}
               placeholder="Your full name"
             />
             {nameError && (
@@ -222,7 +221,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               onBlur={() => validatePassword(password)}
               className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                 passwordError ? 'border-red-300' : 'border-gray-300'
-              } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+              } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm transition-colors duration-200`}
               placeholder="Minimum 8 characters"
             />
             {passwordError && (
@@ -268,7 +267,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               onBlur={() => validateConfirmPassword(confirmPassword)}
               className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                 confirmPasswordError ? 'border-red-300' : 'border-gray-300'
-              } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+              } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm transition-colors duration-200`}
               placeholder="Enter password again"
             />
             {confirmPasswordError && (
@@ -280,7 +279,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             <Button
               type="submit"
               disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
             >
               {isLoading ? 'Creating account...' : 'Create Account'}
             </Button>
