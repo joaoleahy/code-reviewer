@@ -26,6 +26,9 @@ RUN pip install --no-cache-dir --upgrade pip==24.0 \
 # Copy project
 COPY . .
 
+# Run tests to validate build
+RUN python -m pytest tests/ -v --tb=short
+
 # Create non-root user
 RUN addgroup --system app && adduser --system --group app
 RUN chown -R app:app /app
