@@ -50,6 +50,9 @@ class RateLimiter:
         """
         try:
             db = get_database()
+            if db is None:
+                return
+                
             await db.rate_limit_logs.insert_one({
                 "ip_address": ip_address,
                 "timestamp": timestamp,

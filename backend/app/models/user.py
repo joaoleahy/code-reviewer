@@ -5,7 +5,6 @@ from bson import ObjectId
 from passlib.context import CryptContext
 import re
 
-# Password hashing context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class User(BaseModel):

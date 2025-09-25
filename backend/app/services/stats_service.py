@@ -19,7 +19,6 @@ class StatsService:
         try:
             db = get_database()
             
-            # Create filter based on whether user_id is provided
             base_filter = {"user_id": user_id} if user_id else {}
             
             total_reviews = await db.reviews.count_documents(base_filter)
@@ -80,7 +79,6 @@ class StatsService:
         try:
             db = get_database()
             
-            # Create filter based on whether user_id is provided
             match_filter = {"status": ReviewStatus.COMPLETED}
             if user_id:
                 match_filter["user_id"] = user_id
@@ -121,7 +119,6 @@ class StatsService:
             
             thirty_days_ago = datetime.utcnow() - timedelta(days=30)
             
-            # Create filter based on whether user_id is provided
             match_filter = {
                 "created_at": {"$gte": thirty_days_ago},
                 "status": ReviewStatus.COMPLETED
@@ -167,7 +164,6 @@ class StatsService:
         try:
             db = get_database()
             
-            # Create filter based on whether user_id is provided
             find_filter = {
                 "status": ReviewStatus.COMPLETED,
                 "feedback.issues": {"$exists": True}
@@ -204,7 +200,6 @@ class StatsService:
         try:
             db = get_database()
             
-            # Create filter based on whether user_id is provided
             match_filter = {"status": ReviewStatus.COMPLETED}
             if user_id:
                 match_filter["user_id"] = user_id

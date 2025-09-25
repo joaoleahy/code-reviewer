@@ -8,7 +8,7 @@ from ..core.database import get_database
 from bson import ObjectId
 
 router = APIRouter(prefix="/api/auth", tags=["authentication"])
-rate_limiter = RateLimiter()  # No parameters needed
+rate_limiter = RateLimiter()
 
 @router.post("/register", response_model=AuthToken)
 async def register(user_data: UserRegister, request: Request):
@@ -23,7 +23,6 @@ async def register(user_data: UserRegister, request: Request):
     
     db = get_database()
     
-    # Check if user already exists
     existing_user = await db.users.find_one({"email": user_data.email})
     if existing_user:
         raise HTTPException(
@@ -31,7 +30,6 @@ async def register(user_data: UserRegister, request: Request):
             detail="Email already registered"
         )
     
-    # Create new user with hashed password
     user = User(
         email=user_data.email,
         name=user_data.name,
@@ -74,7 +72,6 @@ async def login(user_data: UserLogin, request: Request):
     
     db = get_database()
     
-    # Find user by email
     user_doc = await db.users.find_one({"email": user_data.email})
     
     if not user_doc:
@@ -83,14 +80,12 @@ async def login(user_data: UserLogin, request: Request):
             detail="Invalid email or password"
         )
     
-    # Verify password
     if not User.verify_password(user_data.password, user_doc["password_hash"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password"
         )
     
-    # Update last login
     await db.users.update_one(
         {"_id": user_doc["_id"]},
         {

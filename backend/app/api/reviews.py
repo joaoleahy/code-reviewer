@@ -63,7 +63,6 @@ async def get_review(
         if not review:
             raise HTTPException(status_code=404, detail="Review not found")
         
-        # If user is authenticated, only return their own reviews
         if current_user and review.user_id != current_user.id:
             raise HTTPException(status_code=404, detail="Review not found")
         
@@ -98,7 +97,7 @@ async def list_reviews(
             start_date=start_date,
             end_date=end_date,
             search_text=search_text,
-            user_id=current_user.id  # Filter by authenticated user
+            user_id=current_user.id
         )
         
     except Exception as e:
@@ -118,11 +117,9 @@ async def export_reviews_csv(
     Export reviews to CSV (user-scoped)
     """
     try:
-        # Validate dates
         if start_date >= end_date:
             raise HTTPException(status_code=400, detail="Start date must be before end date")
         
-        # Get data for current user only
         reviews = await review_service.get_reviews_for_export(
             start_date=start_date,
             end_date=end_date,
@@ -135,10 +132,8 @@ async def export_reviews_csv(
         if not reviews:
             raise HTTPException(status_code=404, detail="No reviews found for the specified criteria")
         
-        # Generate CSV
         csv_content = csv_exporter.export_reviews_to_csv(reviews)
         
-        # Return as download
         csv_buffer = io.StringIO(csv_content)
         
         return StreamingResponse(
@@ -158,7 +153,6 @@ async def delete_review(review_id: str):
     """
     Delete review (development/admin only)
     """
-    # In production, implement admin authentication
     try:
         from ..core.database import get_database
         from bson import ObjectId

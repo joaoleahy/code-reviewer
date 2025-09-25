@@ -20,7 +20,6 @@ async def health_check():
 
         config_status = check_config_health()
 
-        # Overall status
         is_healthy = mongo_status and config_status
         
         response = {

@@ -9,7 +9,7 @@ class JWTHandler:
     def __init__(self):
         self.secret_key = os.getenv('JWT_SECRET_KEY', self._generate_secret())
         self.algorithm = "HS256"
-        self.access_token_expire_minutes = 60 * 24 * 7  # 7 days
+        self.access_token_expire_minutes = 60 * 24 * 7
         
     def _generate_secret(self) -> str:
         return secrets.token_urlsafe(32)
