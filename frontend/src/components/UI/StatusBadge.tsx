@@ -104,8 +104,8 @@ export const StatusProgress: React.FC<{
   return (
     <div className={cn('flex items-center space-x-4', className)}>
       {steps.map((step, index) => {
-        const isCompleted = index < currentStepIndex;
-        const isCurrent = index === currentStepIndex;
+        const isCompleted = index < currentStepIndex || (currentStatus === 'completed' && step.status === 'completed');
+        const isCurrent = index === currentStepIndex && currentStatus !== 'completed';
         const isPending = index > currentStepIndex;
 
         return (
