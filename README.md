@@ -8,7 +8,7 @@ A web system that allows developers to submit code for automated AI-powered revi
 - **Backend**: FastAPI with Python
 - **Database**: MongoDB
 - **Cache**: Redis (Local/Upstash)
-- **AI**: OpenAI GPT-5-mini
+- **AI**: OpenAI GPT-4.1-mini
 - **Background Jobs**: FastAPI Background Tasks
 
 ## 📁 Project Structure
@@ -186,7 +186,7 @@ function fetchUserData(userId) {
 
 - [x] **Code submission interface** - Upload and submit code for review
 - [x] **Real-time syntax highlighting** - Code visualization with syntax support
-- [x] **AI code review service** - Automated analysis using OpenAI GPT-5-mini
+- [x] **AI code review service** - Automated analysis using OpenAI GPT-4.1-mini
 - [x] **Intelligent caching system** - Redis cache with 1000x+ performance improvement
 - [x] **MongoDB storage** - Persistent data storage and retrieval
 - [x] **Analytics dashboard** - Usage statistics and insights
