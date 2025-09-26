@@ -15,7 +15,7 @@ class AIService:
         
     async def review_code(self, code: str, language: ProgrammingLanguage, description: Optional[str] = None) -> ReviewFeedback:
         """
-        Review code using OpenAI GPT-4.1-mini via direct HTTP API with caching
+        Review code using OpenAI GPT-5-mini via direct HTTP API with caching
         """
         start_time = time.time()
         
@@ -34,7 +34,7 @@ class AIService:
             }
             
             payload = {
-                "model": "gpt-4.1-mini",
+                "model": "gpt-5-mini",
                 "messages": [
                     {
                         "role": "system",
