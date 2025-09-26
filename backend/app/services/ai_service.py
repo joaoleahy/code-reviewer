@@ -34,7 +34,7 @@ class AIService:
             }
             
             payload = {
-                "model": "gpt-5-mini",
+                "model": "gpt-4.1-mini",
                 "messages": [
                     {
                         "role": "system",
