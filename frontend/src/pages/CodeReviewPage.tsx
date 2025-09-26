@@ -24,7 +24,7 @@ const CodeReviewPage: React.FC = () => {
   };
 
   const currentReview = pollingReview || review;
-  const showLoading = isLoading || isPolling;
+  const showLoading = (isLoading || isPolling) && (!currentReview || currentReview.status !== 'completed');
 
   return (
     <Layout>

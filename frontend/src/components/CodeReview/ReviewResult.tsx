@@ -5,9 +5,7 @@ import {
   Shield, 
   Zap, 
   ThumbsUp, 
-  Star,
-  Copy,
-  Share2
+  Star
 } from 'lucide-react';
 import { Review } from '../../types/api';
 import { getQualityLevel, formatDate, formatSeconds } from '../../utils/helpers';
@@ -92,38 +90,6 @@ const ReviewResult: React.FC<ReviewResultProps> = ({
 
   const qualityLevel = getQualityLevel(feedback.quality_score);
 
-  const handleCopyResult = async () => {
-    const resultText = `
-# Code Review - ${review.language}
-
-## Quality Score: ${feedback.quality_score}/10 (${qualityLevel.label})
-
-${feedback.issues.length > 0 ? `## Identified Issues
-${feedback.issues.map(issue => `• ${issue}`).join('\n')}` : ''}
-
-${feedback.suggestions.length > 0 ? `## Improvement Suggestions
-${feedback.suggestions.map(suggestion => `• ${suggestion}`).join('\n')}` : ''}
-
-${feedback.security_concerns.length > 0 ? `## Security Concerns
-${feedback.security_concerns.map(concern => `• ${concern}`).join('\n')}` : ''}
-
-${feedback.performance_recommendations.length > 0 ? `## Performance Recommendations
-${feedback.performance_recommendations.map(rec => `• ${rec}`).join('\n')}` : ''}
-
-${feedback.positive_aspects.length > 0 ? `## Positive Aspects
-${feedback.positive_aspects.map(aspect => `• ${aspect}`).join('\n')}` : ''}
-
----
-Review generated on ${formatDate(review.created_at)}
-    `.trim();
-
-    try {
-      await navigator.clipboard.writeText(resultText);
-    } catch (error) {
-      console.error('Error copying result:', error);
-    }
-  };
-
   return (
     <div className={`bg-white rounded-lg shadow-sm border border-gray-200 ${className}`}>
       <div className="border-b border-gray-200 p-6">
@@ -144,23 +110,6 @@ Review generated on ${formatDate(review.created_at)}
                 {review.processing_time && ` • Processed in ${formatSeconds(review.processing_time)}`}
               </p>
             </div>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              icon={Copy}
-              onClick={handleCopyResult}
-              title="Copy result"
-            />
-            <Button
-              variant="outline"
-              size="sm"
-              icon={Share2}
-              title="Share"
-            />
-            <StatusBadge status={review.status} />
           </div>
         </div>
 
