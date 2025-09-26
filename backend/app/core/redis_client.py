@@ -56,16 +56,16 @@ class RedisClient:
     async def _upstash_request(self, command: str, *args) -> Any:
         """Make HTTP request to Upstash Redis REST API"""
         url = f"{self.upstash_url}/{command}"
-        if args:
-            url += "/" + "/".join(str(arg) for arg in args)
-            
+        
         headers = {
             "Authorization": f"Bearer {self.upstash_token}",
             "Content-Type": "application/json"
         }
         
+        body = list(args) if args else []
+        
         async with httpx.AsyncClient() as client:
-            response = await client.post(url, headers=headers, timeout=10.0)
+            response = await client.post(url, headers=headers, json=body, timeout=10.0)
             response.raise_for_status()
             data = response.json()
             return data.get("result")
