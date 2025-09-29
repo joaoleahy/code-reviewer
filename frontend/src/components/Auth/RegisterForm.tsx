@@ -7,6 +7,7 @@ interface RegisterFormProps {
   onBack: () => void;
   isLoading?: boolean;
   error?: string;
+  successMessage?: string;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ 
@@ -14,7 +15,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   onShowLogin, 
   onBack, 
   isLoading = false, 
-  error 
+  error,
+  successMessage 
 }) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -148,6 +150,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           {error && (
             <div className="rounded-md bg-red-50 p-4">
               <div className="text-sm text-red-800">{error}</div>
+            </div>
+          )}
+          
+          {successMessage && (
+            <div className="rounded-md bg-green-50 p-4">
+              <div className="text-sm text-green-800">{successMessage}</div>
             </div>
           )}
           

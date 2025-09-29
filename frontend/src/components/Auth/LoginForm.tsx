@@ -7,6 +7,7 @@ interface LoginFormProps {
   onBack: () => void;
   isLoading?: boolean;
   error?: string;
+  successMessage?: string;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ 
@@ -14,7 +15,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   onShowRegister, 
   onBack, 
   isLoading = false, 
-  error 
+  error,
+  successMessage 
 }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -91,6 +93,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           {error && (
             <div className="rounded-md bg-red-50 p-4">
               <div className="text-sm text-red-800">{error}</div>
+            </div>
+          )}
+          
+          {successMessage && (
+            <div className="rounded-md bg-green-50 p-4">
+              <div className="text-sm text-green-800">{successMessage}</div>
             </div>
           )}
           

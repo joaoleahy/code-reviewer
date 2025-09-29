@@ -26,7 +26,7 @@ async def register(user_data: UserRegister, request: Request):
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email already registered"
+            detail=f"This email address ({user_data.email}) is already registered. Please use a different email or try logging in instead."
         )
     
     user = User(
@@ -76,13 +76,13 @@ async def login(user_data: UserLogin, request: Request):
     if not user_doc:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid email or password"
+            detail="No account found with this email address. Please check your email or create a new account."
         )
     
     if not User.verify_password(user_data.password, user_doc["password_hash"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid email or password"
+            detail="Incorrect password. Please check your password and try again."
         )
     
     await db.users.update_one(

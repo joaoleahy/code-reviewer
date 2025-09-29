@@ -10,7 +10,9 @@ interface AuthContextType {
   register: (email: string, name: string, password: string) => Promise<void>;
   logout: () => void;
   error: string | null;
+  successMessage: string | null;
   clearError: () => void;
+  clearSuccess: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,6 +28,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const isAuthenticated = !!user;
 
@@ -64,6 +67,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setIsLoading(true);
       setError(null);
+      setSuccessMessage(null);
       
       const authData: AuthToken = await ApiService.login({ email, password });
       
@@ -71,6 +75,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(authData.user));
       
       setUser(authData.user);
+      setSuccessMessage(`Welcome back, ${authData.user.name}! You have successfully logged in.`);
     } catch (err: any) {
       console.error('Login error:', err);
       setError(err.message || 'Login failed. Please check your credentials.');
@@ -84,6 +89,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setIsLoading(true);
       setError(null);
+      setSuccessMessage(null);
       
       const authData: AuthToken = await ApiService.register({ email, name, password });
       
@@ -91,6 +97,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(authData.user));
       
       setUser(authData.user);
+      setSuccessMessage(`Welcome to Code Reviewer, ${authData.user.name}! Your account has been created successfully.`);
     } catch (err: any) {
       console.error('Register error:', err);
       setError(err.message || 'Failed to create account. Please try again.');
@@ -114,6 +121,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setError(null);
   };
 
+  const clearSuccess = (): void => {
+    setSuccessMessage(null);
+  };
+
   const value: AuthContextType = {
     user,
     isAuthenticated,
@@ -122,7 +133,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     register,
     logout,
     error,
+    successMessage,
     clearError,
+    clearSuccess,
   };
 
   return (

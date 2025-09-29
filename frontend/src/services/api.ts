@@ -41,20 +41,26 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
+    const errorData = error.response?.data as any;
     const apiError: ApiError = {
-      message: error.message,
+      message: errorData?.detail || error.message,
       status: error.response?.status,
       details: error.response?.data,
     };
 
     if (error.response?.status === 401) {
-      localStorage.removeItem('codereviewer_token');
-      localStorage.removeItem('codereviewer_user');
-      window.dispatchEvent(new Event('auth-logout'));
+      // Only clear auth data if it's not a login/register endpoint
+      const isAuthEndpoint = error.config?.url?.includes('/auth/login') || 
+                            error.config?.url?.includes('/auth/register');
+      if (!isAuthEndpoint) {
+        localStorage.removeItem('codereviewer_token');
+        localStorage.removeItem('codereviewer_user');
+        window.dispatchEvent(new Event('auth-logout'));
+      }
     } else if (error.response?.status === 429) {
-      apiError.message = 'Rate limit exceeded. Please try again later.';
+      apiError.message = errorData?.detail || 'Rate limit exceeded. Please try again later.';
     } else if (error.response?.status === 500) {
-      apiError.message = 'Server error. Please try again.';
+      apiError.message = errorData?.detail || 'Server error. Please try again.';
     } else if (error.code === 'ECONNABORTED') {
       apiError.message = 'Request timeout. Check your connection.';
     }

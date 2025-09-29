@@ -33,7 +33,7 @@ const queryClient = new QueryClient({
 type AuthView = 'landing' | 'login' | 'register';
 
 const AppContent: React.FC = () => {
-  const { isAuthenticated, isLoading, login, register, error, clearError } = useAuth();
+  const { isAuthenticated, isLoading, login, register, error, successMessage, clearError, clearSuccess } = useAuth();
   const [authView, setAuthView] = useState<AuthView>('landing');
   const [authLoading, setAuthLoading] = useState(false);
 
@@ -90,10 +90,19 @@ const AppContent: React.FC = () => {
     return (
       <LoginForm
         onLogin={handleLogin}
-        onShowRegister={() => setAuthView('register')}
-        onBack={() => setAuthView('landing')}
+        onShowRegister={() => {
+          clearError();
+          clearSuccess();
+          setAuthView('register');
+        }}
+        onBack={() => {
+          clearError();
+          clearSuccess();
+          setAuthView('landing');
+        }}
         isLoading={authLoading}
         error={error || undefined}
+        successMessage={successMessage || undefined}
       />
     );
   }
@@ -102,18 +111,35 @@ const AppContent: React.FC = () => {
     return (
       <RegisterForm
         onRegister={handleRegister}
-        onShowLogin={() => setAuthView('login')}
-        onBack={() => setAuthView('landing')}
+        onShowLogin={() => {
+          clearError();
+          clearSuccess();
+          setAuthView('login');
+        }}
+        onBack={() => {
+          clearError();
+          clearSuccess();
+          setAuthView('landing');
+        }}
         isLoading={authLoading}
         error={error || undefined}
+        successMessage={successMessage || undefined}
       />
     );
   }
 
   return (
     <LandingPage
-      onShowLogin={() => setAuthView('login')}
-      onShowRegister={() => setAuthView('register')}
+      onShowLogin={() => {
+        clearError();
+        clearSuccess();
+        setAuthView('login');
+      }}
+      onShowRegister={() => {
+        clearError();
+        clearSuccess();
+        setAuthView('register');
+      }}
     />
   );
 };
