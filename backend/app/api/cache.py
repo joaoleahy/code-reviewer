@@ -1,38 +1,6 @@
-from fastapi import APIRouter, HTTPException, Depends
-from typing import Dict, Any
-
-from ..services.cache_service import cache_service
-from ..models.user import UserResponse
-from ..utils.dependencies import require_auth
+from fastapi import APIRouter, HTTPException
 
 router = APIRouter(tags=["cache"], prefix="/cache")
-
-
-@router.get("/stats", response_model=Dict[str, Any])
-async def get_cache_stats(current_user: UserResponse = Depends(require_auth)):
-    """
-    Get cache statistics - requires authentication
-    """
-    try:
-        stats = await cache_service.get_cache_stats()
-        return stats
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error getting cache stats: {str(e)}")
-
-
-@router.post("/cleanup")
-async def cleanup_expired_cache(current_user: UserResponse = Depends(require_auth)):
-    """
-    Manually trigger cleanup of expired cache entries
-    """
-    try:
-        removed_count = await cache_service.clean_expired_cache()
-        return {
-            "message": f"Cleanup completed",
-            "removed_entries": removed_count
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error cleaning cache: {str(e)}")
 
 
 @router.delete("/clear")

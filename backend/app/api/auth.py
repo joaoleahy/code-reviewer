@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status, Depends, Request
 from datetime import datetime, timezone
 from ..models.user import User, UserLogin, UserRegister, UserResponse, AuthToken
 from ..utils.auth import jwt_handler
-from ..utils.dependencies import require_auth, optional_auth
+from ..utils.dependencies import require_auth
 from ..utils.rate_limiter import RateLimiter
 from ..core.database import get_database
 
@@ -120,7 +120,3 @@ async def get_profile(current_user: UserResponse = Depends(require_auth)):
 @router.post("/logout")
 async def logout(current_user: UserResponse = Depends(require_auth)):
     return {"message": "Successfully logged out"}
-
-@router.get("/me", response_model=UserResponse)
-async def get_current_user_info(current_user: UserResponse = Depends(require_auth)):
-    return current_user
