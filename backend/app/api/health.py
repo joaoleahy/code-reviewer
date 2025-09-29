@@ -1,9 +1,12 @@
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
 import asyncio
+import logging
 
 from ..core.database import get_database
 from ..core.config import settings
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(tags=["health"])
 
@@ -69,10 +72,10 @@ async def check_mongodb_health() -> bool:
         return True
         
     except asyncio.TimeoutError:
-        print("MongoDB health check timeout")
+        logger.warning("MongoDB health check timeout")
         return False
     except Exception as e:
-        print(f"MongoDB health check failed: {e}")
+        logger.error(f"MongoDB health check failed: {e}")
         return False
 
 
@@ -82,17 +85,17 @@ def check_config_health() -> bool:
     """
     try:
         if not settings.OPENAI_API_KEY:
-            print("OpenAI API key not configured")
+            logger.warning("OpenAI API key not configured")
             return False
         
         if not settings.MONGODB_URI:
-            print("MongoDB URI not configured")
+            logger.warning("MongoDB URI not configured")
             return False
         
         return True
         
     except Exception as e:
-        print(f"Config health check failed: {e}")
+        logger.error(f"Config health check failed: {e}")
         return False
 
 

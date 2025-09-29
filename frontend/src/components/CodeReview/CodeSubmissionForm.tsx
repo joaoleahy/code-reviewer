@@ -118,10 +118,10 @@ const CodeSubmissionForm: React.FC<CodeSubmissionFormProps> = ({
                 'font-medium',
                 isCodeTooLong ? 'text-red-600' : 'text-gray-600'
               )}>
-                {codeLength.toLocaleString('pt-BR')}
+                {codeLength.toLocaleString('en-US')}
               </span>
               <span className="text-gray-400">
-                / {APP_CONFIG.maxCodeLength.toLocaleString('pt-BR')}
+                / {APP_CONFIG.maxCodeLength.toLocaleString('en-US')}
               </span>
             </div>
           </div>

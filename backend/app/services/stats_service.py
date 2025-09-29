@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
 from collections import Counter
@@ -6,6 +7,8 @@ from pymongo import DESCENDING
 from ..core.database import get_database
 from ..models.review import ReviewStatus
 from ..models.stats import StatsResponse, LanguageStats, DailyStats, CommonIssue
+
+logger = logging.getLogger(__name__)
 
 
 class StatsService:
@@ -63,7 +66,7 @@ class StatsService:
             )
             
         except Exception as e:
-            print(f"Error getting statistics: {e}")
+            logger.error(f"Error getting statistics: {e}")
             return StatsResponse(
                 total_reviews=0,
                 total_completed=0,
@@ -107,7 +110,7 @@ class StatsService:
             return language_stats
             
         except Exception as e:
-            print(f"Error getting language stats: {e}")
+            logger.error(f"Error getting language stats: {e}")
             return []
     
     async def _get_daily_stats(self, user_id: str = None) -> List[DailyStats]:

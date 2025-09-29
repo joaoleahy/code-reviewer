@@ -27,10 +27,8 @@ export const useReview = (reviewId?: string) => {
     clearError();
     
     try {
-      console.log(`[useReview] Loading review ${id}`);
       const reviewData = await ApiService.getReview(id);
       setReview(reviewData);
-      console.log(`[useReview] Review loaded successfully:`, reviewData.status);
     } catch (err: any) {
       console.error(`[useReview] Error loading review ${id}:`, err);
       setError(err.message || 'Error loading review');
@@ -70,7 +68,6 @@ export const useReviews = (initialFilters: ReviewFilters = {}) => {
     const filtersKey = JSON.stringify(currentFilters);
     
     if (isLoading && lastFetchedFilters === filtersKey) {
-      console.log('[useReviews] Already loading with same filters, ignoring request');
       return;
     }
 
@@ -79,7 +76,6 @@ export const useReviews = (initialFilters: ReviewFilters = {}) => {
     clearError();
     
     try {
-      console.log('[useReviews] Fetching reviews with filters:', currentFilters);
       const response: ReviewListResponse = await ApiService.listReviews(currentFilters);
       setReviews(response.reviews);
       setPagination({
@@ -88,7 +84,6 @@ export const useReviews = (initialFilters: ReviewFilters = {}) => {
         per_page: response.per_page,
         total_pages: response.total_pages
       });
-      console.log(`[useReviews] Loaded ${response.reviews.length} reviews`);
     } catch (err: any) {
       console.error('[useReviews] Error loading reviews:', err);
       setError(err.message || 'Error loading reviews');
@@ -136,7 +131,6 @@ export const useStats = () => {
 
   const fetchStats = useCallback(async () => {
     if (isLoading) {
-      console.log('[useStats] Already loading, ignoring request');
       return;
     }
 
@@ -144,11 +138,9 @@ export const useStats = () => {
     clearError();
     
     try {
-      console.log('[useStats] Fetching statistics');
       const statsData = await ApiService.getStatistics();
       setStats(statsData);
       setHasInitialized(true);
-      console.log('[useStats] Statistics loaded successfully');
     } catch (err: any) {
       console.error('[useStats] Error loading statistics:', err);
       setError(err.message || 'Error loading statistics');

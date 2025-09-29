@@ -1,10 +1,13 @@
 import hashlib
 import json
+import logging
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any
 
 from ..core.redis_client import redis_client
 from ..models.review import ReviewFeedback, ProgrammingLanguage
+
+logger = logging.getLogger(__name__)
 
 
 class CodeCacheService:
@@ -31,7 +34,7 @@ class CodeCacheService:
             cached_data = await redis_client.get(cache_key)
             
             if cached_data:
-                print(f"Cache HIT for hash: {cache_key[-12:]}...")
+                logger.debug(f"Cache HIT for hash: {cache_key[-12:]}...")
                 
                 feedback_data = json.loads(cached_data)
                 
@@ -41,12 +44,12 @@ class CodeCacheService:
                 
                 return ReviewFeedback(**feedback_data["feedback"])
             
-            print(f"Cache MISS for hash: {cache_key[-12:]}...")
+            logger.debug(f"Cache MISS for hash: {cache_key[-12:]}...")
             await self._update_stats("misses")
             return None
             
         except Exception as e:
-            print(f"Error checking cache: {e}")
+            logger.error(f"Error checking cache: {e}")
             await self._update_stats("errors")
             return None
     
@@ -77,15 +80,15 @@ class CodeCacheService:
             )
             
             if success:
-                print(f"Cached feedback for hash: {cache_key[-12:]}...")
+                logger.debug(f"Cached feedback for hash: {cache_key[-12:]}...")
                 await self._update_stats("cached")
                 return True
             else:
-                print(f"Failed to cache feedback for hash: {cache_key[-12:]}...")
+                logger.warning(f"Failed to cache feedback for hash: {cache_key[-12:]}...")
                 return False
             
         except Exception as e:
-            print(f"Error caching feedback: {e}")
+            logger.error(f"Error caching feedback: {e}")
             await self._update_stats("cache_errors")
             return False
     
@@ -96,7 +99,7 @@ class CodeCacheService:
             await redis_client.set(usage_key, await redis_client.get(usage_key), ex=self.cache_ttl_seconds)
             return True
         except Exception as e:
-            print(f"Error incrementing cache usage: {e}")
+            logger.error(f"Error incrementing cache usage: {e}")
             return False
     
     async def _update_stats(self, stat_type: str) -> bool:
@@ -106,7 +109,7 @@ class CodeCacheService:
             await redis_client.set(stats_key, await redis_client.get(stats_key), ex=7*24*60*60)
             return True
         except Exception as e:
-            print(f"Error updating stats: {e}")
+            logger.error(f"Error updating stats: {e}")
             return False
     
     async def get_cache_stats(self) -> Dict[str, Any]:
@@ -144,7 +147,7 @@ class CodeCacheService:
                             "created_at": data.get("created_at", "unknown")
                         })
                 except Exception as e:
-                    print(f"Error processing key {cache_key}: {e}")
+                    logger.error(f"Error processing key {cache_key}: {e}")
                     continue
             
             most_used.sort(key=lambda x: x["usage_count"], reverse=True)
@@ -163,7 +166,7 @@ class CodeCacheService:
             }
             
         except Exception as e:
-            print(f"Error getting cache stats: {e}")
+            logger.error(f"Error getting cache stats: {e}")
             return {
                 "active_entries": 0,
                 "total_requests": 0,
@@ -187,15 +190,15 @@ class CodeCacheService:
                 if await redis_client.delete(key):
                     deleted_count += 1
             
-            print(f"Cleared {deleted_count} cache entries")
+            logger.info(f"Cleared {deleted_count} cache entries")
             return deleted_count
             
         except Exception as e:
-            print(f"Error clearing cache: {e}")
+            logger.error(f"Error clearing cache: {e}")
             return 0
     
     async def cleanup_expired_cache(self) -> int:
-        print("Redis handles TTL automatically, no manual cleanup needed")
+        logger.info("Redis handles TTL automatically, no manual cleanup needed")
         return 0
 
 

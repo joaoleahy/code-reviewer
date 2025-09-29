@@ -243,14 +243,14 @@ const AnalyticsPage: React.FC = () => {
               <XAxis 
                 dataKey="date" 
                 tick={{ fontSize: 12 }}
-                tickFormatter={(value) => new Date(value).toLocaleDateString('pt-BR', { 
+                tickFormatter={(value) => new Date(value).toLocaleDateString('en-US', { 
                   month: 'short', 
                   day: 'numeric' 
                 })}
               />
               <YAxis />
               <Tooltip 
-                labelFormatter={(value) => new Date(value).toLocaleDateString('pt-BR')}
+                labelFormatter={(value) => new Date(value).toLocaleDateString('en-US')}
                 formatter={(value: any) => [
                   selectedMetric === 'reviews' ? formatNumber(value) : formatNumber(value, 1), 
                   selectedMetric === 'reviews' ? 'Reviews' : 'Average Score'
