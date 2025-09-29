@@ -7,6 +7,13 @@ services:
     branch: main
     healthCheckPath: /api/health
     plan: starter # free tier
+    autoDeployTrigger: commit 
+    buildFilter:
+      paths:
+        - backend/**
+        - frontend/**
+        - Dockerfile.render
+        - render.yaml
     envVars:
       - key: MONGODB_URI
         fromDatabase:
